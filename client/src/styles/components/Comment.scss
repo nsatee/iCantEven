@@ -1,0 +1,93 @@
+.comment {
+    border-top: 1px solid rgba(0, 0, 0, .2);
+    &__wrapper {
+        display: flex;
+        padding: 15px 20px;
+        .thumbnail {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            flex-shrink: 0;
+            justify-content: center;
+            align-items: center;
+            background: $blue;
+            font-weight: bold;
+            color: $white;
+            font-size: 20px;
+            border-radius: 50%;
+            margin: 10px 15px 0 0;
+            box-shadow: 0 2px 10px 2px rgba(38, 41, 189, 0.35);
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+
+        .name {
+            color: $blue;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    }
+
+    &-action {
+        margin-top: 5px;
+        &__body {
+            display: flex;
+            align-items: center;
+
+            .total {
+                font-size: .7em;
+                margin-right: 5px;
+                opacity: .5;
+            }
+            .action-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                span {
+                    font-size: 18px;
+                    padding-top: 3px;
+                    padding-right: 3px;
+                }
+
+            }
+        }
+    }
+
+    &-create {
+        border-top: 1px solid rgba(0, 0, 0, .2);
+        &__wrapper {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+
+            .thumbnail {
+                width: 30px;
+                height: 30px;
+                display: flex;
+                flex-shrink: 0;
+                justify-content: center;
+                align-items: center;
+                background: $blue;
+                font-weight: bold;
+                color: $white;
+                font-size: 16px;
+                border-radius: 50%;
+                margin: 0px 15px 0 0;
+                box-shadow: 0 2px 10px 2px rgba(38, 41, 189, 0.35);
+            }
+        }
+
+        &__body {
+            width: 100%;
+            .comment-input {
+                border-radius: 20px;
+                padding: 10px 15px;
+                width: 100%;
+                border: 1px solid rgba(0, 0, 0, .2);
+            }
+        }
+    }
+}

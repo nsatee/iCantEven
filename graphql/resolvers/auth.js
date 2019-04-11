@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../../models/user");
+const {populateReactions, posts} = require('./merge');
 
 module.exports = {
     createUser: async args => {
@@ -19,6 +20,7 @@ module.exports = {
 
             const user = new User({
                 email: args.userInput.email,
+                username: args.userInput.username,
                 password: hashedPassword
             });
 
@@ -42,9 +44,37 @@ module.exports = {
             { userId: user.id, email: user.email },
             "secreatKey",
             {
-                expiresIn: "1h"
+                expiresIn: "1y"
             }
         );
-        return { userId: user.id, token: token, tokenExpiration: 1 };
+        return {
+            userId: user.id,
+            _id: user._id,
+            token: token,
+            email: email,
+            reacted: populateReactions(user.reacted),
+            createdPosts: posts(user.createdPosts)
+        };
+    },
+    tokenLogin: async ({ token }) => {
+        const decodedToken = await jwt.verify(token, "secreatKey");
+        if (decodedToken) {
+            const user = await User.findOne({ email: decodedToken.email });
+            return {
+                _id: user._id,
+                createdPosts: posts(user.createdPosts),
+                email: user.email,
+                username: user.username,
+                reacted: populateReactions(user.reacted),
+            };
+        }
+    },
+    getUser: async ({ email }) => {
+        try {
+            const user = await User.findOne({ email: email });
+            return user;
+        } catch (err) {
+            throw err;
+        }
     }
 };

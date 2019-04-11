@@ -1,0 +1,67 @@
+
+.main-navigation {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 4rem;
+    background: $white;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -32px 40px 20px rgba(0, 0, 0, .5);
+
+    &__items {
+        color: $black;
+        max-width: 1200px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        ul {
+            display: flex;
+            align-items: center;
+
+            li {
+                padding: 10px 25px;
+
+                &:last-child {
+                    padding-right: 0;
+                }
+
+                &.profile {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+
+                &.logout {
+                    padding-right: 0px;
+
+                    button {
+                        border: 0;
+                        padding: 0;
+                        box-shadow: 0;
+                        font-size: 16px;
+                        padding: 10px 20px;
+                        border-radius: 20px;
+                    }
+                }
+                
+                .profile-thumbnail {
+                    width: 40px;
+                    height: 40px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    border: 1px solid $black;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}

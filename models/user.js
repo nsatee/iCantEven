@@ -6,16 +6,26 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    username: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true
     },
-    createdEvents: [{
+    createdPosts: [{
         type: Schema.Types.ObjectId,
-        ref: 'Event'
+        ref: 'Post'
+    }],
+    reacted: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Reaction'
     }]
-});
+}); 
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = (mongoose.models && mongoose.models.User
+    ? mongoose.models.User
+    : mongoose.model('User', userSchema));
 
 

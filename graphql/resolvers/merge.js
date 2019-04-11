@@ -1,41 +1,53 @@
 const DataLoader = require("dataloader");
 
-const Event = require("../../models/event");
-const User = require("../../models/user");
-const { dateToString } = require("../../helpers/date");
-
-const eventLoader = new DataLoader(eventIds => {
-    return events(eventIds);
-});
+const Post = require("../../models/Post");
+const User = require("../../models/User");
+const Reaction = require("../../models/Reaction");
 
 const userLoader = new DataLoader(userIds => {
     return User.find({ _id: { $in: userIds } });
 });
 
-const events = async eventIds => {
+const postsLoader = new DataLoader(postIds => {
+    return posts(postIds);
+});
+
+const posts = async postIds => {
     try {
-        const events = await Event.find({ _id: { $in: eventIds } });
-        events.sort((a, b) => {
-            return (
-                eventIds.indexOf(a._id.toString()) -
-                eventIds.indexOf(b._id.toString())
-            );
-        });
-        console.log(events, eventIds)
-        return events.map(event => {
-            return transformEvent(event);
+        const posts = await Post.find({ _id: { $in: postIds } });
+        return posts.map(post => {
+            return {
+                ...post._doc,
+                creator: user.bind(this, post.creator),
+                reaction: populateReactions.bind(this, post.reaction)
+            };
         });
     } catch (err) {
         throw err;
     }
 };
 
-const singleEvent = async eventId => {
+const singlePost = async postId => {
     try {
-        const event = await eventLoader.load(eventId.toString());
-        return event;
+        const post = await postsLoader.load(postId.toString());
+        return post;
     } catch (err) {
         throw err;
+    }
+};
+
+const populateReactions = async reactionIds => {
+    try {
+        const reactions = await Reaction.find({ _id: { $in: reactionIds } });
+        return reactions.map(reaction => {
+            return {
+                ...reaction._doc,
+                liker: user.bind(this, reaction.liker),
+                post: singlePost.bind(this, reaction.post)
+            };
+        });
+    } catch (err) {
+        console.log(err);
     }
 };
 
@@ -44,30 +56,14 @@ const user = async userId => {
     try {
         return {
             ...user._doc,
-            createdEvents: () => eventLoader.loadMany(user._doc.createdEvents)
+            createdPosts: () => postsLoader.loadMany(user._doc.createdPosts)
         };
     } catch (err) {
         throw err;
     }
 };
 
-const transformEvent = event => {
-    return {
-        ...event._doc,
-        date: dateToString(event._doc.date),
-        creator: user.bind(this, event.creator)
-    };
-};
-
-const transformBooking = booking => {
-    return {
-        ...booking._doc,
-        user: user.bind(this, booking._doc.user),
-        event: singleEvent.bind(this, booking._doc.event),
-        createdAt: dateToString(booking._doc.createdAt),
-        updatedAt: dateToString(booking._doc.updatedAt)
-    };
-};
-
-exports.transformEvent = transformEvent;
-exports.transformBooking = transformBooking;
+exports.user = user;
+exports.posts = posts;
+exports.singlePost = singlePost;
+exports.populateReactions = populateReactions;

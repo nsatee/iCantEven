@@ -1,8 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const graphqlHttp = require("express-graphql");
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 const graphQlSchema = require("./graphql/schema");
@@ -38,11 +38,13 @@ app.use(
 );
 
 mongoose.connect(
-    `mongodb://${process.env.MONGO_USER}:${
+    `mongodb+srv://${process.env.MONGO_USER}:${
         process.env.MONGO_PASSWORD
-    }@ds229826.mlab.com:29826/gql`,
+    }@cluster0-rc53f.mongodb.net/ice?retryWrites=true`,
     { useNewUrlParser: true },
     console.log("DB is connected")
 );
 
-app.listen(8000, console.log("Server is running"));
+app.listen(8000, () => {
+    console.log("server is running");
+});
