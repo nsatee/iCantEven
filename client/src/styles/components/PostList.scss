@@ -1,16 +1,15 @@
 .post-item {
     width: 100%;
     margin-top: 20px;
-    background: $white;
-    border: 1px solid rgba(0, 0, 0, .2);
-    box-shadow: 0 2px 2px rgba(0, 0, 0, .2);
-    border-radius: 15px;
-
+    background: $lite-black;
+    border: $border-basic;
+    box-shadow: $nav-shadow;
+    border-radius: $radius-basic;
 
     &__meta {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid rgba(0, 0, 0, .2);
+        border-bottom: $border-basic;
 
         .thumbnail {
             width: 50px;
@@ -24,7 +23,7 @@
             font-size: 20px;
             border-radius: 50%;
             margin: 15px 15px;
-            box-shadow: 0 2px 10px 2px rgba(38, 41, 189, 0.35);
+            box-shadow: $nav-shadow;
         }
 
         .info {
@@ -33,13 +32,12 @@
 
             .username {
                 font-weight: bold;
-                color: $blue;
             }
 
             .date {
-                font-size: .7em;
+                font-size: 0.7em;
                 padding-top: 7px;
-                opacity: .5;
+                opacity: 0.5;
             }
         }
     }
@@ -58,16 +56,15 @@
         margin-bottom: 30px;
         font-size: 18px;
         color: $blue;
-        border: 1px solid $blue;
+        border: 2px solid $blue;
+        font-weight: bold;
         padding: 10px 15px;
         border-radius: 20px;
-        transition: .2s;
+        transition: 0.2s;
 
         &:hover {
             color: $white;
             background: $blue;
-            transform: scale(1.02);
-            box-shadow: 0 4px 25px 2px rgba(38, 41, 189, 0.35);
         }
     }
 
@@ -76,28 +73,41 @@
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
-        border-top: 1px solid rgba(0, 0, 0, .2);
+        border-top: $border-basic;
         padding: 10px 20px;
         align-items: center;
 
-        button {
-            font-size: 18px;
+        .reaction-btn {
             width: 35px;
             height: 35px;
-            padding-top: 3px;
-            padding-right: 3px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            transition: 0.2s;
+            box-shadow: 0 0 20px rgba(255, 168, 175, 0);
 
-            &.reacted {
-                background: #ffaab1;
-                border-radius: 50%;
-                
+            span {
+                display: block;
+                width: 100%;
+            }
+
+            &:hover {
+                transform: scale(1.2);
+            }
+
+            &.love {
+                padding-top: 5px;
+                &.reacted {
+                    background-color: #ffaab1;
+                    border-radius: 50%;
+                    box-shadow: 0 0 0px #ffaab1;
+                }
             }
         }
 
         .total-feeling {
             font-size: 14px;
-            opacity: .5;
+            opacity: 0.5;
         }
-
     }
 }

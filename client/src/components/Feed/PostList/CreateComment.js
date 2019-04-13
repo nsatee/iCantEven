@@ -1,33 +1,41 @@
 import React, { Component } from "react";
 import ContentEditable from "react-contenteditable";
+import { graphql } from "react-apollo";
+import { addComment, getComments } from "../../../queries";
 
 class CreateComment extends Component {
     state = {
         comment: ""
     };
-    handleEnter = (e) => {
+    handleEnter = e => {
         if (!e) {
             e = window.event;
         }
         const keyCode = e.which || e.keyCode;
         const target = e.target || e.srcElement;
-        
+
         if (keyCode === 13 && !e.shiftKey) {
             if (e.preventDefault) {
                 e.preventDefault();
-                
             } else {
                 e.returnValue = false;
             }
+            this.props.addComment({
+                variables: {
+                    body: this.state.comment,
+                    post: this.props.postId,
+                    isDeleted: false
+                }
+            });
             target.innerHTML = "";
         }
-    }
+    };
     render() {
         return (
             <div className="comment-create">
                 <div className="comment-create__wrapper">
                     <div className="thumbnail">
-                        <span>G</span>
+                        <span>{this.props.user.username[0]}</span>
                     </div>
                     <div className="comment-create__body">
                         <ContentEditable
@@ -35,7 +43,11 @@ class CreateComment extends Component {
                             className="comment-input"
                             html={this.state.comment}
                             onKeyDown={e => this.handleEnter(e)}
-                            onKeyUp={e => this.setState({comment: e.target.innerHTML})}
+                            onKeyUp={e =>
+                                this.setState({
+                                    comment: e.target.innerHTML
+                                })
+                            }
                         />
                     </div>
                 </div>
@@ -44,4 +56,19 @@ class CreateComment extends Component {
     }
 }
 
-export default CreateComment;
+export default graphql(addComment, {
+    name: "addComment",
+    options: {
+        update: (cache, { data: { addComment } }) => {
+            const { comments } = cache.readQuery({
+                query: getComments,
+                variables: { postId: addComment.post._id }
+            });
+            comments.push(addComment);
+            cache.writeQuery({
+                query: getComments,
+                data: comments
+            });
+        }
+    }
+})(CreateComment);

@@ -55,12 +55,6 @@ module.exports = {
                     { _id: args.post },
                     { $pull: { reaction: result._id } }
                 );
-
-                post.reaction.filter(id => {
-                    return id === result._id;
-                });
-
-                await post.save();
                 console.log("2");
 
                 return {

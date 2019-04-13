@@ -22,6 +22,6 @@ const commentFeelingSchema = new Schema(
     { timestamps: true }
 );
 
-// commentFeelingSchema.index({ "expireAt": 1 }, { expireAfterSeconds: 1 });
+commentFeelingSchema.index({ "expireAt": 1 }, { expireAfterSeconds: 1 });
 
 module.exports = mongoose.model("CommentFeeling", commentFeelingSchema);

@@ -38,7 +38,7 @@ class AuthPage extends Component {
                         <div className="form-control">
                             <label htmlFor="email">E-Mail</label>
                             <input
-                                type="email"
+                                type="text"
                                 id="email"
                                 onChange={e =>
                                     this.setState({ email: e.target.value })

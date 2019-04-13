@@ -1,22 +1,25 @@
 import React, { Component } from "react";
 import CommentAction from "./CommentAction";
-import moment from 'moment';
+import { Link } from "react-router-dom";
 
 class Comment extends Component {
     render() {
-        const {creator, body} = this.props.comment;
+        const { creator, body } = this.props.comment;
         return (
             <div className="comment">
                 <div className="comment__wrapper">
-                    <a href="/" className="thumbnail">
+                    <Link to={`/profile/${creator._id}`} className="thumbnail">
                         <span>{creator.username[0]}</span>
-                    </a>
+                    </Link>
                     <div className="comment__body">
-                        <a href="/" className="name">{creator.username}</a>
-                        <div className="content">
-                            {body}
-                        </div>
-                        <CommentAction comment={this.props.comment}/>
+                        <Link to={`/profile/${creator._id}`} className="name">
+                            {creator.username}
+                        </Link>
+                        <div className="content" dangerouslySetInnerHTML={{__html: body}} />
+                        <CommentAction
+                            comment={this.props.comment}
+                            user={this.props.user}
+                        />
                     </div>
                 </div>
             </div>

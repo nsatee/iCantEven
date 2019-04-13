@@ -1,19 +1,13 @@
 const Comment = require("../../models/Comment");
 const Post = require("../../models/Post");
-const { user, singlePost } = require("./merge");
+const CommentFeeling = require("../../models/CommentFeeling");
+const { user, singlePost, commentFormat } = require("./merge");
 
 module.exports = {
     comments: async ({ postId }) => {
         const comments = await Comment.find({ post: postId });
-        console.log(comments);
         return comments.map(comment => {
-            console.log(comment._id);
-            return {
-                ...comment._doc,
-                createdAt: new Date(comment._doc.createdAt).toISOString(),
-                creator: user.bind(this, comment._doc.creator),
-                post: singlePost.bind(this, comment._doc.post)
-            };
+            return commentFormat(comment);
         });
     },
 
@@ -31,9 +25,61 @@ module.exports = {
             await post.save();
             return {
                 ...result._doc,
+                createdAt: new Date(result._doc.createdAt).toISOString(),
                 creator: user.bind(this, result._doc.creator),
                 post: singlePost.bind(this, result._doc.post)
             };
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    addCommentFeeling: async (args, req) => {
+        const feeling = new CommentFeeling({
+            comment: args.comment,
+            creator: req.userId,
+            isDeleted: args.isDeleted
+        });
+
+        try {
+            
+            if (!args.isDeleted) {
+                const result = await feeling.save();
+                const comment = await Comment.findById(result.comment);
+                comment.feelings.push(result._id);
+                await comment.save();
+
+                return {
+                    ...result._doc,
+                    createdAt: new Date(result._doc.createdAt).toISOString(),
+                    creator: user.bind(this, result._doc.creator),
+                    post: singlePost.bind(this, result._doc.post)
+                };
+
+            } else {
+                const result = await CommentFeeling.findOneAndUpdate(
+                    { _id: args.feelingId },
+                    {
+                        isDeleted: true,
+                        expireAt: new Date(new Date().toISOString())
+                    }
+                );
+
+                console.log(result);
+
+                await Comment.findOneAndUpdate(
+                    { _id: args.comment},
+                    { $pull: {feelings: args.feelingId} }
+                );
+
+                
+                return {
+                    ...result._doc,
+                    createdAt: new Date(result._doc.createdAt).toISOString(),
+                    creator: user.bind(this, result._doc.creator),
+                    post: singlePost.bind(this, result._doc.post)
+                };
+            }
         } catch (err) {
             console.log(err);
         }

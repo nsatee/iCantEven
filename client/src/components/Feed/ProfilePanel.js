@@ -2,7 +2,20 @@ import React, {Component} from 'react';
 
 class ProfilePanel extends Component {
     render() {
-        return <div className="profile-panel"><span>profile</span></div>
+        console.log(this.props.user);
+        const {username} = this.props.user;
+        return (<div className="profile-panel">
+            <div className="profile-panel__wrapper">
+            <div className="thumbnail">
+                <span>{username[0]}</span>
+            </div>
+                <div className="profile-panel__body">
+                    <div className="username">
+                        <span>{username}</span>
+                    </div>
+                </div>
+            </div>
+        </div>)
     }
 }
 

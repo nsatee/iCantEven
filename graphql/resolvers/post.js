@@ -1,21 +1,23 @@
-const DataLoader = require("dataloader");
-
 const Post = require("../../models/Post");
 const User = require("../../models/user");
-const {user, posts, populateReactions} = require('./merge');
+const {user, postFormat} = require('./merge');
 
 module.exports = {
     posts: async () => {
         try {
-            const posts = await Post.find();
+            const posts = await Post.find().sort({createdAt: -1});
             return posts.map(post => {
-                return {
-                    ...post._doc,
-                    createdAt: new Date(post.createdAt).toISOString(),
-                    creator: user.bind(this, post.creator),
-                    reaction: populateReactions.bind(this, post.reaction)
-                }
+                return postFormat(post);
             })
+            
+        } catch (err) {
+            throw err;
+        }
+    },
+    post: async (args) => {
+        try {
+            const post = await Post.findById(args.postId).sort({createdAt: -1});
+            return postFormat(post);
             
         } catch (err) {
             throw err;
@@ -25,6 +27,7 @@ module.exports = {
         if (!req.isAuth) {
             throw new Error('Unauthenticated!');
         }
+        console.log(req.userId);
         const post = new Post({
             body: args.postInput.body,
             headerTag: args.postInput.headerTag,
@@ -41,7 +44,6 @@ module.exports = {
             
             creator.createdPosts.push(post);
             await creator.save();
-            console.log(result)
             return {
                 ...result._doc,
                 createdAt: new Date(post.createdAt).toISOString(),

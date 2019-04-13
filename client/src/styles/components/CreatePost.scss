@@ -1,13 +1,15 @@
 .create-post {
     display: relative;
     border-radius: 10px;
-    background: $white;
-    border: 1px solid rgba(0, 0, 0, .2);
-    box-shadow: 0 2px 2px rgba(0, 0, 0, .2);
+    background: $gray;
+    box-shadow: $nav-shadow;
+    border: $border-basic;
+    overflow: hidden;
 
     &__header {
         padding: 15px 20px;
-        border-bottom: 1px solid rgba(0, 0, 0, .2);
+        border-bottom: $border-basic;
+        background: $lite-black;
     }
 
     &__form {
@@ -17,8 +19,11 @@
             display: flex;
             align-items: center;
             padding: 0 20px;
+            border-bottom: $border-basic;
+            color: $blue;
 
             .hash-wrapper {
+                color: $blue;
                 height: 100%;
                 display: flex;
                 align-items: center;
@@ -32,9 +37,11 @@
         .header-tag {
             width: 100%;
             border: 0;
+            color: $blue;
             padding: 10px 0;
             font-size: 30px;
             font-weight: bold;
+            background: transparent;
         }
     }
 
@@ -49,7 +56,7 @@
     &__actions {
         display: flex;
         justify-content: space-between;
-        border-top: 1px solid rgba(0, 0, 0, 0.2);
+        border-top: $border-basic;
         padding: 20px;
         padding-top: 0;
 

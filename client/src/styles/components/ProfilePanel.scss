@@ -2,7 +2,36 @@
 .profile-panel {
     width: 100%;
     border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, .2);
-    height: 400px;
-    background: $white;
+    border: $border-basic;
+    background: $lite-black;
+    box-shadow: $nav-shadow;
+
+
+    &__wrapper {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .thumbnail {
+            width: 20vw;
+            height: 20vw;
+            max-width: 150px;
+            max-height: 150px;
+            background: $blue;
+            color: $white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4em;
+        }
+    }
+
+    &__body {
+        .username {
+            margin-top: 10px;
+            font-size: 2em;
+            font-weight: bold;
+        }
+    }
 }

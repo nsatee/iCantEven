@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const addComment = gql`
-    mutation AddComment($post: ID!, $isDeleted: Boolean, $body: String!) {
+    mutation AddComment($post: ID!, $isDeleted: Boolean!, $body: String!) {
         addComment(
             commentInput: { post: $post, isDeleted: $isDeleted, body: $body }
         ) {
@@ -9,6 +9,13 @@ export const addComment = gql`
             body
             post {
                 _id
+            }
+            feelings {
+                _id
+                isDeleted
+                creator {
+                    _id
+                }
             }
             isDeleted
             createdAt
@@ -20,19 +27,50 @@ export const addComment = gql`
     }
 `;
 
-export const comments = gql`
+export const getComments = gql`
     query Comments($postId: ID!) {
         comments(postId: $postId) {
             _id
             body
-            createdAt
             post {
+                _id
+            }
+            feelings {
+                _id
+                isDeleted
+                comment {
+                    _id
+                }
+                creator {
+                    _id
+                }
+            }
+            isDeleted
+            createdAt
+            creator {
+                _id
+                username
+            }
+        }
+    }
+`;
+
+export const addCommentFeeling = gql`
+    mutation AddCommentFeeling($comment: ID!, $isDeleted: Boolean!, $feelingId: ID) {
+        addCommentFeeling(comment: $comment, isDeleted: $isDeleted, feelingId: $feelingId) {
+            _id
+            comment {
+                _id
+            }
+            comment {
                 _id
             }
             creator {
                 _id
                 username
             }
+            isDeleted
+            createdAt
         }
     }
 `;

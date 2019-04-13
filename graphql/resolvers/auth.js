@@ -32,7 +32,7 @@ module.exports = {
         }
     },
     login: async ({ email, password }) => {
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({$or: [{ email: email }, { username: email }]});
         if (!user) {
             throw new Error("User is not exist");
         }

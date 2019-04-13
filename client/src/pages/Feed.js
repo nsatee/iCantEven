@@ -19,7 +19,7 @@ class Feed extends Component {
         return (
             <div className="feed">
                 <div className="feed_panel">
-                    <ProfilePanel />
+                    <ProfilePanel user={this.props.user}/>
                 </div>
                 <div className="feed_content">
                     <PostList user={this.props.user} />

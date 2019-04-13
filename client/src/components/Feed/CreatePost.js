@@ -28,58 +28,65 @@ export default class CreatePost extends Component {
                     });
                 }}
             >
-                {(createPost, { data }) => (
-                    <div className="create-post">
-                        <div className="create-post__header">
-                            <h3>Create Post</h3>
-                        </div>
-                        <div className="create-post__container">
-                            <form
-                                className="create-post__form"
-                                onSubmit={e => {
-                                    e.preventDefault();
-                                    createPost({
-                                        variables: { headerTag, body, date }
-                                    });
-                                    this.setState({ headerTag: "", body: "" });
-                                }}
-                            >
-                                <div className="header-tag__wrapper">
-                                    <div className="hash-wrapper">
-                                        <span>#</span>
+                {(createPost, { loading, data }) => {
+                    return (
+                        <div className="create-post">
+                            <div className="create-post__header">
+                                <h3>Create Post</h3>
+                            </div>
+                            <div className="create-post__container">
+                                <form
+                                    className="create-post__form"
+                                    onSubmit={e => {
+                                        e.preventDefault();
+                                        createPost({
+                                            variables: { headerTag, body, date }
+                                        });
+                                        this.setState({
+                                            headerTag: "",
+                                            body: ""
+                                        });
+                                    }}
+                                >
+                                    <div className="header-tag__wrapper">
+                                        <div className="hash-wrapper">
+                                            <span>#</span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            name="headertag"
+                                            className="header-tag"
+                                            placeholder="HeaderTag"
+                                            value={this.state.headerTag}
+                                            onChange={e => {
+                                                this.noSpace(e);
+                                            }}
+                                        />
                                     </div>
-                                    <input
-                                        type="text"
-                                        name="headertag"
-                                        className="header-tag"
-                                        placeholder="HeaderTag"
-                                        value={this.state.headerTag}
-                                        onChange={e => {
-                                            this.noSpace(e);
-                                        }}
+                                    <ContentEditable
+                                        className="create-post__body"
+                                        placeholder="What's going on?"
+                                        html={this.state.body}
+                                        onChange={e =>
+                                            this.setState({
+                                                body: e.target.value
+                                            })
+                                        }
                                     />
-                                </div>
-                                <ContentEditable
-                                    className="create-post__body"
-                                    placeholder="What's going on?"
-                                    html={this.state.body}
-                                    onChange={e =>
-                                        this.setState({ body: e.target.value })
-                                    }
-                                />
-                                <div className="create-post__actions">
-                                    <div className="tools" />
-                                    <button
-                                        type="submit"
-                                        className="create-btn btn-blue"
-                                    >
-                                        Post
-                                    </button>
-                                </div>
-                            </form>
+                                    <div className="create-post__actions" style={{opacity: loading&& .5}}>
+                                        <div className="tools" />
+                                        <button
+                                            type="submit"
+                                            className="create-btn btn-blue"
+                                        >
+                                            {loading ? "Loading" : "Post"}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    );
+                }}
             </Mutation>
         );
     }

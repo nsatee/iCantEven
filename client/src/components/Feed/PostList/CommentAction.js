@@ -1,20 +1,76 @@
 import React, { Component } from "react";
 import moment from "moment";
+import { Mutation } from "react-apollo";
+import { addCommentFeeling } from "../../../queries";
 
 class CommentAction extends Component {
     render() {
-        const { createdAt } = this.props.comment;
+        const { createdAt, _id, feelings } = this.props.comment;
+        let ownFeeling = feelings.filter(feeling => {
+            return (
+                feeling.creator._id === this.props.user._id &&
+                feeling.isDeleted === false
+            );
+        });
+        let hasReacted = ownFeeling.length ? true : false;
+        let total = feelings.length;
+
         return (
-            <div className="comment-action">
-                <div className="comment-action__body">
-                    <div className="total">
-                        {moment.utc(createdAt).fromNow()} | 10 feelings
-                    </div>
-                    <button className="action-btn">
-                        <span>👏</span>
-                    </button>
-                </div>
-            </div>
+            <Mutation mutation={addCommentFeeling}>
+                {(addCommentFeeling, { loading, error, data }) => {
+                    if (error) console.log(error);
+                    if (loading) return (
+                        <div className="comment-action">
+                            <div className="comment-action__body">
+                                <div className="total">
+                                    {moment.utc(createdAt).fromNow()} | {total}{" "}
+                                    feelings
+                                </div>
+                                <button
+                                    className={`action-btn ${
+                                        !hasReacted ? "active" : ""
+                                    }`}
+                                >
+                                    <span>👏</span>
+                                </button>
+                            </div>
+                        </div>
+                    )
+                    return (
+                        <div className="comment-action">
+                            <div className="comment-action__body">
+                                <div className="total">
+                                    {moment.utc(createdAt).fromNow()} | {total}{" "}
+                                    feelings
+                                </div>
+                                <button
+                                    className={`action-btn ${
+                                        !hasReacted ? "active" : ""
+                                    }`}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        console.log(ownFeeling);
+                                        addCommentFeeling({
+                                            variables: {
+                                                comment: _id,
+                                                isDeleted: hasReacted,
+                                                feelingId: data ?
+                                                    data.addCommentFeeling._id :
+                                                    ownFeeling.length && ownFeeling[0]._id
+                                            }
+                                        });
+                                        hasReacted = !hasReacted;
+                                        !hasReacted ? ownFeeling.push(data) : ownFeeling.pop();
+                                        hasReacted ? total++ : total--;
+                                    }}
+                                >
+                                    <span>👏</span>
+                                </button>
+                            </div>
+                        </div>
+                    );
+                }}
+            </Mutation>
         );
     }
 }

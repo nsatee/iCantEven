@@ -9,6 +9,7 @@ import EventsPage from "./pages/Feed";
 import MainNavigation from "./components/Navigation/MainNotification";
 import AuthContext from "./context/auth-context";
 import Signup from "./pages/Signup";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
 
 class App extends Component {
     state = {
@@ -60,6 +61,7 @@ class App extends Component {
                                                 }
                                             />
                                             <Route path="/signup" component={Signup} />
+                                            <Route path="/profile/:profileId?" component={ProfilePage}/>
                                         </Switch>
                                     </main>
                                 </React.Fragment>

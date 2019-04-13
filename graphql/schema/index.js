@@ -8,6 +8,7 @@ type Post {
     date: String!
     creator: User!
     reaction: [Reaction]!
+    comments: [Comment]!
     createdAt: String!
 }
 
@@ -32,10 +33,9 @@ type Comment {
 
 type CommentFeeling {
     _id: ID!
-    post: Post!
+    comment: Comment!
     creator: User!
     isDeleted: Boolean!
-    feelings: [CommentFeeling]!
     createdAt: String!
 }
 
@@ -73,6 +73,7 @@ input CommentInput {
 }
 type RootQuery {
     posts: [Post]!
+    post(postId: ID!): Post!
     comments(postId: ID!): [Comment]!
     login(email: String!, password: String!): AuthData!
     reaction(postId: ID!): [Reaction]!
@@ -83,7 +84,8 @@ type RootMutation {
     createPost(postInput: PostInput): Post
     createUser(userInput: UserInput): User
     addReaction(type: Int!, post: ID!, date: String!, hasReacted: Boolean, reactionId: ID): Reaction
-    addComment(commentInput: CommentInput): Comment
+    addComment(commentInput: CommentInput): Comment!
+    addCommentFeeling(comment: ID!, isDeleted: Boolean!, feelingId: ID): CommentFeeling!
 }
 schema {
     query: RootQuery
