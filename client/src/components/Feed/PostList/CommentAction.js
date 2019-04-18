@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import moment from "moment";
 import { Mutation } from "react-apollo";
-import { addCommentFeeling } from "../../../queries";
+import { addCommentFeeling, getComments } from "../../../queries";
 
 class CommentAction extends Component {
     render() {
-        const { createdAt, _id, feelings } = this.props.comment;
+        const { createdAt, _id, feelings, post } = this.props.comment;
         let ownFeeling = feelings.filter(feeling => {
             return (
                 feeling.creator._id === this.props.user._id &&
@@ -16,7 +16,7 @@ class CommentAction extends Component {
         let total = feelings.length;
 
         return (
-            <Mutation mutation={addCommentFeeling}>
+            <Mutation mutation={addCommentFeeling} refetchQueries={[{query: getComments, variables: {postId: post._id}}]}>
                 {(addCommentFeeling, { loading, error, data }) => {
                     if (error) console.log(error);
                     if (loading) return (

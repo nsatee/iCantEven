@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { ApolloConsumer } from "react-apollo";
 import {Link} from 'react-router-dom';
 
-import "./Auth.css";
 import { login } from "../queries";
 import AuthContext from '../context/auth-context'
 
@@ -36,20 +35,22 @@ class AuthPage extends Component {
                         }}
                     >
                         <div className="form-control">
-                            <label htmlFor="email">E-Mail</label>
                             <input
                                 type="text"
                                 id="email"
+                                className="input-basic"
+                                placeholder="Username or email"
                                 onChange={e =>
                                     this.setState({ email: e.target.value })
                                 }
                             />
                         </div>
                         <div className="form-control">
-                            <label htmlFor="password">Password</label>
                             <input
                                 type="password"
                                 id="password"
+                                className="input-basic"
+                                placeholder="Password"
                                 onChange={e =>
                                     this.setState({
                                         password: e.target.value

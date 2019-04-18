@@ -24,6 +24,7 @@ const feelingLoader = new DataLoader(feelingIds => {
 });
 
 //========================//
+
 //===== format gql schema ======//
 const postFormat = post => {
     return {
@@ -31,7 +32,7 @@ const postFormat = post => {
         createdAt: new Date(post._doc.createdAt).toISOString(),
         creator: user.bind(this, post._doc.creator),
         reaction: populateReactions.bind(this, post._doc.reaction),
-        // comments: () => commentLoader.loadMany(post._doc.comments)
+        comments: () => commentLoader.loadMany(post._doc.comments)
     };
 };
 
@@ -44,6 +45,15 @@ const commentFormat = comment => {
         feelings: () => feelingLoader.loadMany(comment._doc.feelings)
     };
 };
+
+const feelingFormat = feeling => {
+    return {
+        ...feeling._doc,
+        creator: user.bind(this, feeling._doc.creator),
+        comment: singleComment.bind(this, feeling._doc.comment),
+        createdAt: new Date(feeling._doc.createdAt).toISOString(),
+    };
+}
 //==============================//
 
 const posts = async postIds => {
@@ -91,12 +101,7 @@ const feelings = async feelingIds => {
             _id: { $in: feelingIds }
         });
         return feelings.map(feeling => {
-            return {
-                ...feeling._doc,
-                creator: user.bind(this, feeling._doc.creator),
-                comment: singleComment.bind(this, feeling._doc.comment),
-                createdAt: new Date(feeling._doc.createdAt).toISOString(),
-            };
+            return feelingFormat(feeling);
         });
     } catch (err) {
         throw err;
@@ -106,6 +111,7 @@ const feelings = async feelingIds => {
 const singlePost = async postId => {
     try {
         const post = await postsLoader.load(postId.toString());
+        
         return post;
     } catch (err) {
         throw err;

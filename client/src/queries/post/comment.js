@@ -28,8 +28,8 @@ export const addComment = gql`
 `;
 
 export const getComments = gql`
-    query Comments($postId: ID!) {
-        comments(postId: $postId) {
+    query Comments($postId: ID!, $first: Int, $skip: Int) {
+        comments(postId: $postId, first: $first, skip: $skip) {
             _id
             body
             post {
@@ -55,9 +55,29 @@ export const getComments = gql`
     }
 `;
 
+export const getSingleComment = gql`
+    query GetSingleComment($id: ID!){
+        comment(id: $id) {
+            _id
+            body
+            feelings {
+                _id
+            }
+        }
+    }
+`;
+
 export const addCommentFeeling = gql`
-    mutation AddCommentFeeling($comment: ID!, $isDeleted: Boolean!, $feelingId: ID) {
-        addCommentFeeling(comment: $comment, isDeleted: $isDeleted, feelingId: $feelingId) {
+    mutation AddCommentFeeling(
+        $comment: ID!
+        $isDeleted: Boolean!
+        $feelingId: ID
+    ) {
+        addCommentFeeling(
+            comment: $comment
+            isDeleted: $isDeleted
+            feelingId: $feelingId
+        ) {
             _id
             comment {
                 _id

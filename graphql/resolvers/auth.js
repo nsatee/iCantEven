@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../../models/user");
-const {populateReactions, posts} = require('./merge');
+const { populateReactions, posts } = require("./merge");
 
 module.exports = {
     createUser: async args => {
@@ -32,7 +32,9 @@ module.exports = {
         }
     },
     login: async ({ email, password }) => {
-        const user = await User.findOne({$or: [{ email: email }, { username: email }]});
+        const user = await User.findOne({
+            $or: [{ email: email }, { username: email }]
+        });
         if (!user) {
             throw new Error("User is not exist");
         }
@@ -65,14 +67,14 @@ module.exports = {
                 createdPosts: posts(user.createdPosts),
                 email: user.email,
                 username: user.username,
-                reacted: populateReactions(user.reacted),
+                reacted: populateReactions(user.reacted)
             };
         }
     },
-    getUser: async ({ email }) => {
+    getUser: async ({ id }) => {
         try {
-            const user = await User.findOne({ email: email });
-            return user;
+            const user = await User.findById(id);
+            return { ...user._doc, createdPosts: posts(user.createdPosts) };
         } catch (err) {
             throw err;
         }

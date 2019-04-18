@@ -1,18 +1,7 @@
-.feed {
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    position: relative;
-
-    &_panel {
-        max-width: (1100 / 100) * 35 + px;
-        width: 35%;
-        position: fixed;
-
-    }
-    &_content {
-        width: 60%;
-        margin-left: 40%;
+@media (max-width: 767px) {
+    .feed.main-wrapper {
+        .main-wrapper_panel {
+            display: none;
+        }
     }
 }
-

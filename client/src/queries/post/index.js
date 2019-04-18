@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const getPosts = gql`
-    query {
-        posts {
+    query GetPosts($uid: ID){
+        posts(uid: $uid) {
             _id
             body
             date
@@ -25,9 +25,9 @@ export const getPosts = gql`
 `;
 
 export const createPost = gql`
-    mutation CreatePost($body: String!, $date: String!, $headerTag: String) {
+    mutation CreatePost($body: String!, $date: String!, $headerTag: String, $creator: ID!) {
         createPost(
-            postInput: { body: $body, date: $date, headerTag: $headerTag }
+            postInput: { body: $body, date: $date, headerTag: $headerTag, creator: $creator }
         ) {
             _id
             headerTag

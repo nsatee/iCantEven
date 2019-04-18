@@ -1,38 +1,45 @@
 const Post = require("../../models/Post");
 const User = require("../../models/user");
-const {user, postFormat} = require('./merge');
+const { user, postFormat } = require("./merge");
 
 module.exports = {
-    posts: async () => {
+    posts: async ({ uid }) => {
+        
+        function hasUid(uid) {
+            if (uid) {
+                return { creator: uid };
+            }
+            return {};
+        }
+        console.log(hasUid(uid))
         try {
-            const posts = await Post.find().sort({createdAt: -1});
+            const posts = await Post.find(hasUid(uid)).sort({ createdAt: -1 });
             return posts.map(post => {
                 return postFormat(post);
-            })
-            
+            });
         } catch (err) {
             throw err;
         }
     },
-    post: async (args) => {
+    post: async args => {
         try {
-            const post = await Post.findById(args.postId).sort({createdAt: -1});
+            const post = await Post.findById(args.postId).sort({
+                createdAt: -1
+            });
             return postFormat(post);
-            
         } catch (err) {
             throw err;
         }
     },
     createPost: async (args, req) => {
         if (!req.isAuth) {
-            throw new Error('Unauthenticated!');
+            throw new Error("Unauthenticated!");
         }
-        console.log(req.userId);
         const post = new Post({
             body: args.postInput.body,
             headerTag: args.postInput.headerTag,
             date: new Date(args.postInput.date),
-            creator: req.userId
+            creator: args.postInput.creator,
         });
         try {
             const result = await post.save();
@@ -41,7 +48,7 @@ module.exports = {
             if (!creator) {
                 throw new Error("User not found");
             }
-            
+
             creator.createdPosts.push(post);
             await creator.save();
             return {
@@ -49,7 +56,6 @@ module.exports = {
                 createdAt: new Date(post.createdAt).toISOString(),
                 creator: user.bind(this, result.creator)
             };
-
         } catch (err) {
             throw err;
         }

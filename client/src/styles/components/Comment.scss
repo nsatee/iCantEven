@@ -1,12 +1,10 @@
 .comment {
-    border-top: $border-basic;
     &__wrapper {
         display: flex;
         padding: 15px 20px;
         transition: .2s;
-        &:hover {
-            background: $gray;
-        }
+        overflow: hidden;
+        
         .thumbnail {
             width: 50px;
             height: 50px;
@@ -19,14 +17,31 @@
             color: $white;
             font-size: 20px;
             border-radius: 50%;
-            margin: 10px 15px 0 0;
-            box-shadow: $nav-shadow;
+            margin: 0px 15px 0 0;
         }
     }
 
     &__body {
         display: flex;
         flex-direction: column;
+
+        .content-wrapper {
+            display: inline;
+            background: $blue;
+            padding: 15px;
+            border-radius: 25px;
+
+            .name {
+                margin-right: 5px;
+                margin-bottom: 0;
+                color: #31476f;
+                line-height: 1.2em;
+            }
+
+            .content {
+                display: inline;
+            }
+        }
 
         .name {
             color: $lite-gray;
@@ -36,7 +51,7 @@
     }
 
     &-action {
-        margin-top: 5px;
+        margin-left: 15px;
         &__body {
             display: flex;
             align-items: center;
@@ -80,12 +95,12 @@
                 font-size: 16px;
                 border-radius: 50%;
                 margin: 0px 15px 0 0;
-                box-shadow: $nav-shadow;
             }
         }
 
         &__body {
             width: 100%;
+
             .comment-input {
                 border-radius: 20px;
                 padding: 10px 15px;

@@ -12,10 +12,18 @@ class Comment extends Component {
                         <span>{creator.username[0]}</span>
                     </Link>
                     <div className="comment__body">
-                        <Link to={`/profile/${creator._id}`} className="name">
-                            {creator.username}
-                        </Link>
-                        <div className="content" dangerouslySetInnerHTML={{__html: body}} />
+                        <div className="content-wrapper">
+                            <Link
+                                to={`/profile/${creator._id}`}
+                                className="name"
+                            >
+                                {creator.username}
+                            </Link>
+                            <div
+                                className="content"
+                                dangerouslySetInnerHTML={{ __html: body }}
+                            />
+                        </div>
                         <CommentAction
                             comment={this.props.comment}
                             user={this.props.user}

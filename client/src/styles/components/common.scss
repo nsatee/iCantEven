@@ -38,6 +38,45 @@ input::-webkit-input-placeholder {
     opacity: .5;
 }
 
+.main-wrapper {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    position: relative;
+
+    &_panel {
+        max-width: (1100 / 100) * 35 + px;
+        width: 35%;
+        position: fixed;
+
+    }
+
+    &_content {
+        width: 60%;
+        margin-left: 40%;
+    }
+}
+
+@media (max-width: 767px) {
+    .main-wrapper {
+        display: block;
+
+        &_panel {
+            max-width: none;
+            width: 100%;
+            position: relative;
+
+        }
+
+        &_content {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+}
+
+
+
 button,
 .btn {
     background: transparent;
@@ -65,5 +104,38 @@ button,
     box-shadow: $nav-shadow;
     right: 0;
     margin-top: 5px;
+    border: $border-basic;
+    display: block !important;
+
+    li {
+        a {
+            display: block;
+            text-align: right;
+            padding-right: 10px;
+            color: $white;
+            font-weight: bold;
+        }
+    }
+}
+
+.thumbnail {
+    max-width: 150px;
+    max-height: 150px;
+    background: $blue;
+    color: $white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+}
+
+.input-basic {
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 20px;
+    padding: 10px 15px;
+    width: 100%;
+    background: $gray;
     border: $border-basic;
 }

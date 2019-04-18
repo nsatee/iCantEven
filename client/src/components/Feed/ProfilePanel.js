@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 class ProfilePanel extends Component {
     render() {
-        console.log(this.props.user);
         const {username} = this.props.user;
         return (<div className="profile-panel">
             <div className="profile-panel__wrapper">

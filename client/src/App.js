@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { graphql, Query } from "react-apollo";
 
-import './components/common/momentFormat'
+import "./components/common/momentFormat";
 import { tokenLogin } from "./queries";
 import AuthPage from "./pages/Auth";
-import EventsPage from "./pages/Feed";
+import Feed from "./pages/Feed";
 import MainNavigation from "./components/Navigation/MainNotification";
 import AuthContext from "./context/auth-context";
 import Signup from "./pages/Signup";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
+import RouteOrigin from "./components/common/RouteOrigin";
 
 class App extends Component {
     state = {
@@ -54,14 +55,27 @@ class App extends Component {
                                                 path="/"
                                                 render={() =>
                                                     signinRoute ? (
-                                                        <EventsPage user={data.tokenLogin}/>
+                                                        <Feed
+                                                            user={
+                                                                data.tokenLogin
+                                                            }
+                                                            createPost={true}
+                                                        />
                                                     ) : (
                                                         <AuthPage />
                                                     )
                                                 }
                                             />
-                                            <Route path="/signup" component={Signup} />
-                                            <Route path="/profile/:profileId?" component={ProfilePage}/>
+                                            <Route
+                                                path="/signup"
+                                                component={Signup}
+                                            />
+                                            <RouteOrigin
+                                                path="/profile/:profileId?"
+                                                component={ProfilePage}
+                                                createPost={false}
+                                                currentUser={data && data.tokenLogin}
+                                            />
                                         </Switch>
                                     </main>
                                 </React.Fragment>

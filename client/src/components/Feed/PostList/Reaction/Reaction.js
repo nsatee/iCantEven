@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { Mutation, Query } from "react-apollo";
-import { addReaction, getReaction } from "../../../../queries";
-import Icon from '../../../svg/Icon'
+import { addReaction, getReaction, getPosts } from "../../../../queries";
+import Icon from "../../../svg/Icon";
 
-
-const ReactionMutation = ({ total, hasReacted, isReacted, postId }) => {
-    console.log(isReacted);
+const ReactionMutation = ({ total, hasReacted, isReacted, postId, reaction }) => {
     return (
-        <Mutation mutation={addReaction}>
+        <Mutation
+            mutation={addReaction}
+            refetchQueries={[
+                { query: getReaction, variables: { postId: postId } },
+                {query: getPosts, variables: {uid: reaction.liker}}
+            ]}
+        >
             {(addReaction, { loading, error, data }) => {
                 if (loading) {
                     return (
@@ -17,9 +21,17 @@ const ReactionMutation = ({ total, hasReacted, isReacted, postId }) => {
                                 {total > 1 && "s"}
                             </span>
                             <button
-                                className={`reaction-btn love ${hasReacted ? "reacted" : ""}`}
+                                className={`reaction-btn love ${
+                                    hasReacted ? "reacted" : ""
+                                }`}
                             >
-                                <span><Icon name="heart" fill="#D94A38" width="100%"/></span>
+                                <span>
+                                    <Icon
+                                        name="heart"
+                                        fill="#D94A38"
+                                        width="100%"
+                                    />
+                                </span>
                             </button>
                         </div>
                     );
@@ -30,7 +42,9 @@ const ReactionMutation = ({ total, hasReacted, isReacted, postId }) => {
                             {total} feeling{total > 1 && "s"}
                         </span>
                         <button
-                            className={`reaction-btn love ${hasReacted ? "reacted" : ""}`}
+                            className={`reaction-btn love ${
+                                hasReacted ? "reacted" : ""
+                            }`}
                             onClick={e => {
                                 e.preventDefault();
                                 addReaction({
@@ -48,7 +62,9 @@ const ReactionMutation = ({ total, hasReacted, isReacted, postId }) => {
                                 hasReacted ? total++ : total--;
                             }}
                         >
-                            <span><Icon name="heart" fill="#D94A38"/></span>
+                            <span>
+                                <Icon name="heart" fill="#D94A38" />
+                            </span>
                         </button>
                     </div>
                 );
@@ -59,14 +75,20 @@ const ReactionMutation = ({ total, hasReacted, isReacted, postId }) => {
 
 class Reaction extends Component {
     render() {
-        console.log(this.props);
         return (
             <Query
                 query={getReaction}
                 variables={{ postId: this.props.postId }}
             >
                 {({ loading, error, data: { reaction } }) => {
-                    if (loading) return "Loading...";
+                    if (loading) return <ReactionMutation
+                    total={0}
+                    hasReacted={false}
+                    postId={this.props.postId}
+                    user={this.props.user}
+                    isReacted={this.props.isReacted}
+                    reaction={this.props.reaction}
+                />
                     let hasReacted = false;
                     let total = 0;
                     reaction.map(item => {

@@ -57,3 +57,13 @@ export const createUser = gql`
         }
     }
 `;
+
+export const getUser = gql`
+    query getUser($id: ID!) {
+        getUser(id: $id) {
+            _id
+            username
+            email
+        }
+    }
+`;

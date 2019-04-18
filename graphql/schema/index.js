@@ -55,10 +55,12 @@ type AuthData {
     reacted: [Reaction!]
 
 }
+
 input PostInput {
     body: String!
     headerTag: String
     date: String!
+    creator: ID!
 }
 input UserInput {
     email: String!
@@ -72,13 +74,14 @@ input CommentInput {
     body: String!
 }
 type RootQuery {
-    posts: [Post]!
+    posts(uid: ID): [Post]!
     post(postId: ID!): Post!
-    comments(postId: ID!): [Comment]!
+    comments(postId: ID!, first: Int, skip: Int): [Comment]!
+    comment(id: ID!): Comment!
     login(email: String!, password: String!): AuthData!
     reaction(postId: ID!): [Reaction]!
-    tokenLogin(token: String): User
-    getUser(email: String!): User!
+    tokenLogin(token: String): User!
+    getUser(id: ID!): User!
 }
 type RootMutation {
     createPost(postInput: PostInput): Post

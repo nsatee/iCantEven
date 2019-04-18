@@ -58,17 +58,20 @@ class CreateComment extends Component {
 
 export default graphql(addComment, {
     name: "addComment",
-    options: {
+    options: (props) => ({
         update: (cache, { data: { addComment } }) => {
-            const { comments } = cache.readQuery({
+            console.log('props', props);
+            const data = cache.readQuery({
                 query: getComments,
-                variables: { postId: addComment.post._id }
+                variables: { postId: addComment.post._id, first: props.first, skip: props.skip }
             });
-            comments.push(addComment);
-            cache.writeQuery({
+            data.comments.unshift(addComment);
+            return cache.writeQuery({
                 query: getComments,
-                data: comments
+                variables: { postId: addComment.post._id, first: props.first, skip: props.skip },
+                data
             });
+
         }
-    }
+    })
 })(CreateComment);

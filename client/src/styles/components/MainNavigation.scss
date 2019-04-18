@@ -26,11 +26,23 @@
             align-items: center;
 
             > li {
-                padding: 10px 25px;
+                margin-right: 10px;
                 position: relative;
+
+
+                > a {
+                    padding: 10px 20px;
+
+                    &.active {
+                        background:  #F29767;
+                        color: white;
+                        border-radius: 25px;
+                    }
+                }
 
                 &:last-child {
                     padding-right: 0;
+                    margin-right: 0;
                 }
 
                 &.profile {
@@ -48,13 +60,6 @@
                         background: #c53827;
                     }
 
-                    a {
-                        display: block;
-                        text-align: right;
-                        padding-right: 10px;
-                        color: $white;
-                        font-weight: bold;
-                    }
                 }
                 
                 .profile-thumbnail {

@@ -21,9 +21,11 @@ export default class CreatePost extends Component {
             <Mutation
                 mutation={createPost}
                 update={(cache, { data: { createPost } }) => {
-                    const { posts } = cache.readQuery({ query: getPosts });
+                    const { posts } = cache.readQuery({ query: getPosts, variables: {uid: ""} });
+                    console.log(posts)
                     cache.writeQuery({
                         query: getPosts,
+                        variables: {uid: ""},
                         data: { posts: [createPost, ...posts] }
                     });
                 }}
@@ -40,7 +42,7 @@ export default class CreatePost extends Component {
                                     onSubmit={e => {
                                         e.preventDefault();
                                         createPost({
-                                            variables: { headerTag, body, date }
+                                            variables: { headerTag, body, date, creator: this.props.user._id }
                                         });
                                         this.setState({
                                             headerTag: "",

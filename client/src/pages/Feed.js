@@ -17,12 +17,12 @@ class Feed extends Component {
 
     render() {
         return (
-            <div className="feed">
-                <div className="feed_panel">
+            <div className="feed main-wrapper">
+                <div className="feed_panel main-wrapper_panel">
                     <ProfilePanel user={this.props.user}/>
                 </div>
-                <div className="feed_content">
-                    <PostList user={this.props.user} />
+                <div className="feed_content main-wrapper_content">
+                    <PostList user={this.props.user} createPost={this.props.createPost} userPost={""}/>
                 </div>
             </div>
         );
