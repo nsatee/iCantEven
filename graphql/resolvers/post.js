@@ -1,17 +1,19 @@
 const Post = require("../../models/Post");
 const User = require("../../models/user");
+const Comment = require("../../models/Comment");
+const Reaction = require("../../models/Reaction");
+const CommentFeeling = require("../../models/CommentFeeling");
 const { user, postFormat } = require("./merge");
 
 module.exports = {
     posts: async ({ uid }) => {
-        
         function hasUid(uid) {
             if (uid) {
                 return { creator: uid };
             }
             return {};
         }
-        console.log(hasUid(uid))
+        console.log(hasUid(uid));
         try {
             const posts = await Post.find(hasUid(uid)).sort({ createdAt: -1 });
             return posts.map(post => {
@@ -39,7 +41,7 @@ module.exports = {
             body: args.postInput.body,
             headerTag: args.postInput.headerTag,
             date: new Date(args.postInput.date),
-            creator: args.postInput.creator,
+            creator: args.postInput.creator
         });
         try {
             const result = await post.save();
@@ -58,6 +60,54 @@ module.exports = {
             };
         } catch (err) {
             throw err;
+        }
+    },
+    deletePost: async ({ postId }) => {
+        try {
+            const result = await Post.findOneAndUpdate(
+                { _id: postId },
+                {
+                    isDeleted: true,
+                    expireAt: new Date(new Date().toISOString())
+                }
+            );
+            console.log(result);
+
+            await User.findOneAndUpdate(
+                { _id: result.creator },
+                {$pull: {createdPosts: postId}}
+            );
+
+            await Comment.updateMany(
+                { _id: { $in: result.comments } },
+                {
+                    isDeleted: true,
+                    expireAt: new Date(new Date().toISOString())
+                }
+            );
+            
+            const comments = await Comment.find({
+                _id: { $in: result.comments }
+            });
+            comments.map(async comment => {
+                await CommentFeeling.updateMany(
+                    { _id: { $in: comment.feelings } },
+                    {
+                        isDeleted: true,
+                        expireAt: new Date(new Date().toISOString())
+                    }
+                );
+            });
+            await Reaction.updateMany(
+                { _id: { $in: result.reaction } },
+                {
+                    isDeleted: true,
+                    expireAt: new Date(new Date().toISOString())
+                }
+            );
+            return { ...result._doc, isDeleted: true };
+        } catch (err) {
+            console.log(err);
         }
     }
 };

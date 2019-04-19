@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { Mutation, Query } from "react-apollo";
-import { addReaction, getReaction, getPosts } from "../../../../queries";
-import Icon from "../../../svg/Icon";
+import { addReaction, getReaction, getPosts } from "../../../queries";
+import Icon from "../../svg/Icon";
 
 const ReactionMutation = ({ total, hasReacted, isReacted, postId, reaction }) => {
     return (
         <Mutation
             mutation={addReaction}
             refetchQueries={[
-                { query: getReaction, variables: { postId: postId } },
-                {query: getPosts, variables: {uid: reaction.liker}}
+                { query: getReaction, variables: { postId: postId } }
             ]}
         >
             {(addReaction, { loading, error, data }) => {

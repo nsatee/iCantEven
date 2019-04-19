@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import { Mutation } from "react-apollo";
-import { addCommentFeeling, getComments } from "../../../queries";
+import { addCommentFeeling, getComments, getSingleComment } from "../../../queries";
 
 class CommentAction extends Component {
     render() {
@@ -16,7 +16,7 @@ class CommentAction extends Component {
         let total = feelings.length;
 
         return (
-            <Mutation mutation={addCommentFeeling} refetchQueries={[{query: getComments, variables: {postId: post._id}}]}>
+            <Mutation mutation={addCommentFeeling} refetchQueries={[{query: getSingleComment, variables: {id: _id}}]}>
                 {(addCommentFeeling, { loading, error, data }) => {
                     if (error) console.log(error);
                     if (loading) return (

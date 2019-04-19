@@ -7,6 +7,7 @@ type Post {
     headerTag: String
     date: String!
     creator: User!
+    isDeleted: Boolean!
     reaction: [Reaction]!
     comments: [Comment]!
     createdAt: String!
@@ -84,9 +85,10 @@ type RootQuery {
     getUser(id: ID!): User!
 }
 type RootMutation {
-    createPost(postInput: PostInput): Post
-    createUser(userInput: UserInput): User
-    addReaction(type: Int!, post: ID!, date: String!, hasReacted: Boolean, reactionId: ID): Reaction
+    createPost(postInput: PostInput): Post!
+    deletePost(postId: ID!): Post!
+    createUser(userInput: UserInput): User!
+    addReaction(type: Int!, post: ID!, date: String!, hasReacted: Boolean, reactionId: ID): Reaction!
     addComment(commentInput: CommentInput): Comment!
     addCommentFeeling(comment: ID!, isDeleted: Boolean!, feelingId: ID): CommentFeeling!
 }

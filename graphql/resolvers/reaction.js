@@ -35,7 +35,6 @@ module.exports = {
                 await post.save();
 
                 const result = await reaction.save();
-                console.log("1");
                 return {
                     ...result._doc,
                     liker: user.bind(this, result._doc.liker),
@@ -55,7 +54,6 @@ module.exports = {
                     { _id: args.post },
                     { $pull: { reaction: result._id } }
                 );
-                console.log("2");
 
                 return {
                     ...result._doc,
