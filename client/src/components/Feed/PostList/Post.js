@@ -15,10 +15,21 @@ class Post extends Component {
     handleDeletePost = postId => {
         this.props.deletePost({ variables: { postId } });
     };
+
+    handleIsReacted() {
+        const { post, user } = this.props;
+        for (let i = 0; i < post.reaction.length; i++) {
+            if (post.reaction[i].liker._id === user._id) {
+                return {reacted: true, reactionId: post.reaction[i]._id}
+            }
+        }
+        return {reacted: false, reactionId: null}
+    }
     render() {
         const { post, user } = this.props;
         const { confirmDelete } = this.state;
-
+        
+        
         return (
             <div className="post-item" key={post._id}>
                 {confirmDelete && (
@@ -110,12 +121,9 @@ class Post extends Component {
                     <Reaction
                         postId={post._id}
                         user={user}
+                        total={post.reaction.length}
                         reaction={post.reaction}
-                        isReacted={post.reaction.map(reaction => {
-                            return reaction.liker._id === user._id
-                                ? reaction._id
-                                : false;
-                        })}
+                        isReacted={this.handleIsReacted()}
                     />
                     <CommentList postId={post._id} user={user} />
                 </div>
@@ -146,3 +154,4 @@ export default graphql(deletePost, {
         }
     })
 })(Post);
+

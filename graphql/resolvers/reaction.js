@@ -30,7 +30,7 @@ module.exports = {
                     liker: req.userId,
                     date: new Date(args.date)
                 });
-                console.log(post);
+                
                 post.reaction.push(reaction);
                 await post.save();
 
@@ -41,7 +41,7 @@ module.exports = {
                     post: singlePost.bind(this, result._doc.post)
                 };
             } else {
-                console.log(args.reactionId);
+                
                 const result = await Reaction.findOneAndUpdate(
                     { _id: args.reactionId },
                     {

@@ -8,16 +8,16 @@ class CommentAction extends Component {
         const { createdAt, _id, feelings, post } = this.props.comment;
         let ownFeeling = feelings.filter(feeling => {
             return (
-                feeling.creator._id === this.props.user._id &&
+                feeling.creator._id === this.props.user._id ||
                 feeling.isDeleted === false
             );
         });
         let hasReacted = ownFeeling.length ? true : false;
         let total = feelings.length;
-
         return (
             <Mutation mutation={addCommentFeeling} refetchQueries={[{query: getSingleComment, variables: {id: _id}}]}>
                 {(addCommentFeeling, { loading, error, data }) => {
+
                     if (error) console.log(error);
                     if (loading) return (
                         <div className="comment-action">

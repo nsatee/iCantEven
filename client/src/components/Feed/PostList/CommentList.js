@@ -12,7 +12,6 @@ class CommentList extends Component {
     };
 
     render() {
-        console.log(this.state);
         return (
             <div className="comment-list">
                 <CreateComment
@@ -34,7 +33,6 @@ class CommentList extends Component {
 
                         if (error) console.log(error);
                         const commentsData = [...this.state.comments, ...comments]
-                        console.log(comments)
                         return (
                             <React.Fragment>
                                 {commentsData.map(comment => (

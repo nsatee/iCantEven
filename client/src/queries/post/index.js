@@ -10,12 +10,17 @@ export const getPosts = gql`
             headerTag
             creator {
                 _id
-                email
                 username
+                createdPosts {
+                    _id
+                }
             }
             reaction {
                 _id
                 liker {
+                    _id
+                }
+                post {
                     _id
                 }
                 type
@@ -46,11 +51,16 @@ export const createPost = gql`
             createdAt
             creator {
                 _id
-                email
                 username
+                createdPosts {
+                    _id
+                }
             }
             reaction {
                 _id
+                post {
+                    _id
+                }
                 type
                 isDeleted
             }
@@ -81,6 +91,9 @@ export const addReaction = gql`
             }
             post {
                 _id
+                creator {
+                    _id
+                }
             }
             isDeleted
         }

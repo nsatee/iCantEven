@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Query, ApolloConsumer } from "react-apollo";
+import { Query } from "react-apollo";
 
 import { getPosts } from "../../../queries";
 import CreatePost from "../CreatePost";
@@ -20,33 +20,24 @@ const PostListContent = props => {
 class PostList extends Component {
     render() {
         return (
-            <ApolloConsumer>
-                {client => (
-                    <Query
-                        query={getPosts}
-                        variables={{ uid: this.props.userPost }}
-                    >
-                        {({ loading, error, data: { posts } }) => {
-                            console.log(posts);
-                            if (loading)
-                                return (
-                                    <React.Fragment>
-                                        <div className="loading-post" />
-                                        <div className="loading-post" />
-                                        <div className="loading-post" />
-                                    </React.Fragment>
-                                );
-                            return (
-                                <PostListContent
-                                    posts={posts}
-                                    user={this.props.user}
-                                    createPost={this.props.createPost}
-                                />
-                            );
-                        }}
-                    </Query>
-                )}
-            </ApolloConsumer>
+            <Query query={getPosts} variables={{ uid: this.props.userPost }}>
+                {({ loading, error, data: { posts } }) => {
+                    if (loading)
+                        return (
+                            <React.Fragment>
+                                <div className="loading-post" />
+                                <div className="loading-post" />
+                            </React.Fragment>
+                        );
+                    return (
+                        <PostListContent
+                            posts={posts}
+                            user={this.props.user}
+                            createPost={this.props.createPost}
+                        />
+                    );
+                }}
+            </Query>
         );
     }
 }
