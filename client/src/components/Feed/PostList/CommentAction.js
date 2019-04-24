@@ -9,7 +9,7 @@ class CommentAction extends Component {
     total = this.props.comment.feelings.length;
 
     componentWillMount() {
-        const { createdAt, _id, feelings, post } = this.props.comment;
+        const { feelings} = this.props.comment;
         const ownFeeling = feelings.filter(feeling => {
             return (
                 feeling.creator._id === this.props.user._id ||
@@ -17,17 +17,15 @@ class CommentAction extends Component {
             );
         });
         this.ownFeeling = ownFeeling;
-        // console.log(this.ownFeeling);
         
         if(this.ownFeeling.length) {
             this.hasReacted = true; 
         }else {
             this.hasReacted = false; 
         }
-        // console.log(this.hasReacted, this.total);
     }
     render() {
-        const { createdAt, _id, feelings, post } = this.props.comment;
+        const { createdAt, _id, post } = this.props.comment;
         const { hasReacted, total, ownFeeling } = this;
         return (
             <Mutation

@@ -31,11 +31,12 @@ class CommentList extends Component {
 
     addedComment(newComment) {
         console.log(newComment);
-        this.setState({comments: [newComment, ...this.state.comments]})
+        this.setState({ comments: [newComment, ...this.state.comments] });
         console.log(this.state.comments);
     }
 
     render() {
+        console.log(this.state.comments);
         return (
             <div className="comment-list">
                 <CreateComment
@@ -71,7 +72,11 @@ class CommentList extends Component {
                                             />
                                         </div>
                                     ))}
-                                    <button>Loading</button>
+                                    <div className="loadmore-wrapper">
+                                        <button className="load-comments">
+                                            Loading
+                                        </button>
+                                    </div>
                                 </React.Fragment>
                             );
                         if (error) console.log(error);
@@ -98,26 +103,30 @@ class CommentList extends Component {
                                     </div>
                                 ))}
                                 {this.state.total > 0 && (
-                                    <button
-                                        onClick={() =>
-                                            this.setState({
-                                                first:
-                                                    this.state.first === 3
-                                                        ? this.state.first
-                                                        : this.state.first + 3,
-                                                skip: this.state.skip + 3,
-                                                comments: [
-                                                    ...this.state.comments,
-                                                    ...comments
-                                                ],
-                                                total: this.state.total - 3
-                                            })
-                                        }
-                                    >
-                                        {`read ${
-                                            this.state.total
-                                        } more comments`}
-                                    </button>
+                                    <div className="loadmore-wrapper">
+                                        <button
+                                            className="load-comments"
+                                            onClick={() =>
+                                                this.setState({
+                                                    first:
+                                                        this.state.first === 3
+                                                            ? this.state.first
+                                                            : this.state.first +
+                                                              10,
+                                                    skip: this.state.skip + 10,
+                                                    comments: [
+                                                        ...this.state.comments,
+                                                        ...comments
+                                                    ],
+                                                    total: this.state.total - 10
+                                                })
+                                            }
+                                        >
+                                            {`${this.state.total} more comment${
+                                                this.state.total > 1 ? "s" : ""
+                                            }`}
+                                        </button>
+                                    </div>
                                 )}
                             </React.Fragment>
                         );

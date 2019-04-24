@@ -20,16 +20,15 @@ class Post extends Component {
         const { post, user } = this.props;
         for (let i = 0; i < post.reaction.length; i++) {
             if (post.reaction[i].liker._id === user._id) {
-                return {reacted: true, reactionId: post.reaction[i]._id}
+                return { reacted: true, reactionId: post.reaction[i]._id };
             }
         }
-        return {reacted: false, reactionId: null}
+        return { reacted: false, reactionId: null };
     }
     render() {
         const { post, user } = this.props;
         const { confirmDelete } = this.state;
-        
-        
+
         return (
             <div className="post-item" key={post._id}>
                 {confirmDelete && (
@@ -77,7 +76,9 @@ class Post extends Component {
                             <div className="btn-wrapper">
                                 <button
                                     onClick={() =>
-                                        this.setState({ postMenu: !this.state.postMenu })
+                                        this.setState({
+                                            postMenu: !this.state.postMenu
+                                        })
                                     }
                                     className="delete-pop-btn"
                                 >
@@ -85,37 +86,45 @@ class Post extends Component {
                                     <span className="dot" />
                                     <span className="dot" />
                                 </button>
-                                {this.state.postMenu && <ul
-                                    className="dropdown"
-                                    onClick={() =>
-                                        this.setState({ postMenu: false })
-                                    }
-                                >
-                                    <li>
-                                        <button
-                                            onClick={() =>
-                                                this.setState({
-                                                    confirmDelete: true
-                                                })
-                                            }
-                                        >
-                                            Delete
-                                        </button>
-                                    </li>
-                                </ul>}
+                                {this.state.postMenu && (
+                                    <ul
+                                        className="dropdown"
+                                        onClick={() =>
+                                            this.setState({ postMenu: false })
+                                        }
+                                    >
+                                        <li>
+                                            <button
+                                                onClick={() =>
+                                                    this.setState({
+                                                        confirmDelete: true
+                                                    })
+                                                }
+                                            >
+                                                Delete
+                                            </button>
+                                        </li>
+                                    </ul>
+                                )}
                             </div>
                         )}
                     </div>
                     <div className="post-item__wrapper" key={post._id}>
-                        <Link
-                            className="post-item__tag"
-                            to={`/hashtag/${post.headerTag}`}
-                        >
-                            #{post.headerTag}
-                        </Link>
+                        {post.headerTag !== "" && (
+                            <Link
+                                className="post-item__tag"
+                                to={`/hashtag/${post.headerTag}`}
+                            >
+                                #{post.headerTag}
+                            </Link>
+                        )}
                         <div
                             className="post-item__body"
                             dangerouslySetInnerHTML={{ __html: post.body }}
+                            style={{
+                                fontSize: post.body.length < 80 ? 30 : 16,
+                                lineHeight: post.body.length > 80 && 1.3
+                            }}
                         />
                     </div>
                     <Reaction
@@ -125,7 +134,11 @@ class Post extends Component {
                         reaction={post.reaction}
                         isReacted={this.handleIsReacted()}
                     />
-                    <CommentList postId={post._id} user={user} total={post.commentTotal}/>
+                    <CommentList
+                        postId={post._id}
+                        user={user}
+                        total={post.commentTotal}
+                    />
                 </div>
             </div>
         );
@@ -154,4 +167,3 @@ export default graphql(deletePost, {
         }
     })
 })(Post);
-

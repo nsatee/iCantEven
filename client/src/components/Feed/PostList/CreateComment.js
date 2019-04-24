@@ -5,7 +5,8 @@ import { addComment } from "../../../queries";
 
 class CreateComment extends Component {
     state = {
-        comment: ""
+        comment: "",
+        wTop: null
     };
     handleEnter = e => {
         if (!e) {
@@ -32,10 +33,9 @@ class CreateComment extends Component {
             });
             target.blur();
             target.innerHTML = "";
-            this.setState({comment: ""});
+            this.setState({ comment: "" });
         }
     };
-
 
     render() {
         return (
@@ -64,21 +64,5 @@ class CreateComment extends Component {
 }
 
 export default graphql(addComment, {
-    name: "addComment",
-    // options: (props) => ({
-    //     update: (cache, { data: { addComment } }) => {
-    //         const data = cache.readQuery({
-    //             query: getComments,
-    //             variables: { postId: addComment.post._id, first: props.first, skip: props.skip }
-    //         });
-    //         const newData = [addComment,...data.comments]
-    //         console.log(props);
-    //         return cache.writeQuery({
-    //             query: getComments,
-    //             variables: { postId: addComment.post._id, first: props.first, skip: props.skip },
-    //             data: {comments: newData}
-    //         });
-
-    //     }
-    // })
+    name: "addComment"
 })(CreateComment);
