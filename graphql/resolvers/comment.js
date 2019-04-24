@@ -31,7 +31,7 @@ module.exports = {
         try {
             const result = await comment.save();
             await post.comments.push(result._id);
-            await post.total++;
+            await post.commentTotal++;
             await post.save();
             return commentFormat(comment);
         } catch (err) {

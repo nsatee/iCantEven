@@ -125,7 +125,7 @@ class Post extends Component {
                         reaction={post.reaction}
                         isReacted={this.handleIsReacted()}
                     />
-                    <CommentList postId={post._id} user={user} />
+                    <CommentList postId={post._id} user={user} total={post.commentTotal}/>
                 </div>
             </div>
         );

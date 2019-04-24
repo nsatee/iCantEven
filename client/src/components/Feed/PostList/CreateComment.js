@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ContentEditable from "react-contenteditable";
 import { graphql } from "react-apollo";
-import { addComment, getComments } from "../../../queries";
+import { addComment } from "../../../queries";
 
 class CreateComment extends Component {
     state = {
@@ -25,12 +25,18 @@ class CreateComment extends Component {
                     body: this.state.comment,
                     post: this.props.postId,
                     isDeleted: false
+                },
+                update: (cache, { data: { addComment } }) => {
+                    this.props.addedComment(addComment);
                 }
             });
             target.blur();
             target.innerHTML = "";
+            this.setState({comment: ""});
         }
     };
+
+
     render() {
         return (
             <div className="comment-create">
@@ -59,20 +65,20 @@ class CreateComment extends Component {
 
 export default graphql(addComment, {
     name: "addComment",
-    options: (props) => ({
-        update: (cache, { data: { addComment } }) => {
-            console.log('props', props);
-            const data = cache.readQuery({
-                query: getComments,
-                variables: { postId: addComment.post._id, first: props.first, skip: props.skip }
-            });
-            const newData = [addComment,...data.comments]
-            return cache.writeQuery({
-                query: getComments,
-                variables: { postId: addComment.post._id, first: props.first, skip: props.skip },
-                data: {comments: newData}
-            });
+    // options: (props) => ({
+    //     update: (cache, { data: { addComment } }) => {
+    //         const data = cache.readQuery({
+    //             query: getComments,
+    //             variables: { postId: addComment.post._id, first: props.first, skip: props.skip }
+    //         });
+    //         const newData = [addComment,...data.comments]
+    //         console.log(props);
+    //         return cache.writeQuery({
+    //             query: getComments,
+    //             variables: { postId: addComment.post._id, first: props.first, skip: props.skip },
+    //             data: {comments: newData}
+    //         });
 
-        }
-    })
+    //     }
+    // })
 })(CreateComment);

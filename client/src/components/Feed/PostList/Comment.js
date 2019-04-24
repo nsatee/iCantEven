@@ -8,30 +8,35 @@ class Comment extends Component {
         return (
             <div className="comment">
                 <div className="comment__wrapper">
-                    <Link to={`/profile/${creator._id}`} className="thumbnail">
-                        <span>{creator.username[0]}</span>
-                    </Link>
-                    <div className="comment__body">
-                        <div className="content-wrapper">
-                            <Link
-                                to={`/profile/${creator._id}`}
-                                className="name"
-                            >
-                                {creator.username}
-                            </Link>
-                            <div
-                                className="content"
-                                dangerouslySetInnerHTML={{ __html: body }}
-                            />
+                    <div className="comment__body-wrapper">
+                        <Link
+                            to={`/profile/${creator._id}`}
+                            className="thumbnail"
+                        >
+                            <span>{creator.username[0]}</span>
+                        </Link>
+                        <div className="comment__body">
+                            <div className="content-wrapper">
+                                <Link
+                                    to={`/profile/${creator._id}`}
+                                    className="name"
+                                >
+                                    {creator.username}
+                                </Link>
+                                <div
+                                    className="content"
+                                    dangerouslySetInnerHTML={{ __html: body }}
+                                />
+                            </div>
                         </div>
-                        <CommentAction
-                            comment={this.props.comment}
-                            user={this.props.user}
-                            activeComment={this.props.activeComment.bind(this)}
-                            first={this.props.first}
-                            skip={this.props.skip}
-                        />
                     </div>
+                    <CommentAction
+                        comment={this.props.comment}
+                        user={this.props.user}
+                        activeComment={this.props.activeComment.bind(this)}
+                        first={this.props.first}
+                        skip={this.props.skip}
+                    />
                 </div>
             </div>
         );

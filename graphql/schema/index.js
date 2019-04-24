@@ -8,6 +8,7 @@ type Post {
     date: String!
     creator: User!
     isDeleted: Boolean!
+    commentTotal: Int!
     reaction: [Reaction]!
     comments: [Comment]!
     createdAt: String!

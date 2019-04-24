@@ -8,7 +8,8 @@ class CommentList extends Component {
     state = {
         comments: [],
         skip: 0,
-        first: 3
+        first: 3,
+        total: this.props.total - 3
     };
 
     activeComment(id) {
@@ -16,12 +17,21 @@ class CommentList extends Component {
         let commentsData = [];
         this.state.comments.map(comment => {
             if (comment._id === id) {
-                return commentsData.push({...comment, isDeleted: !comment.isDeleted});
+                return commentsData.push({
+                    ...comment,
+                    isDeleted: !comment.isDeleted
+                });
             }
             return commentsData.push(comment);
         });
 
-        this.setState({comments: commentsData});
+        this.setState({ comments: commentsData });
+        console.log(this.state.comments);
+    }
+
+    addedComment(newComment) {
+        console.log(newComment);
+        this.setState({comments: [newComment, ...this.state.comments]})
         console.log(this.state.comments);
     }
 
@@ -33,6 +43,7 @@ class CommentList extends Component {
                     user={this.props.user}
                     first={this.state.first}
                     skip={this.state.skip}
+                    addedComment={this.addedComment.bind(this)}
                 />
                 <Query
                     query={getComments}
@@ -86,23 +97,28 @@ class CommentList extends Component {
                                         />
                                     </div>
                                 ))}
-                                <button
-                                    onClick={() =>
-                                        this.setState({
-                                            first:
-                                                this.state.first === 3
-                                                    ? this.state.first
-                                                    : this.state.first + 3,
-                                            skip: this.state.skip + 3,
-                                            comments: [
-                                                ...this.state.comments,
-                                                ...comments
-                                            ]
-                                        })
-                                    }
-                                >
-                                    more comments
-                                </button>
+                                {this.state.total > 0 && (
+                                    <button
+                                        onClick={() =>
+                                            this.setState({
+                                                first:
+                                                    this.state.first === 3
+                                                        ? this.state.first
+                                                        : this.state.first + 3,
+                                                skip: this.state.skip + 3,
+                                                comments: [
+                                                    ...this.state.comments,
+                                                    ...comments
+                                                ],
+                                                total: this.state.total - 3
+                                            })
+                                        }
+                                    >
+                                        {`read ${
+                                            this.state.total
+                                        } more comments`}
+                                    </button>
+                                )}
                             </React.Fragment>
                         );
                     }}

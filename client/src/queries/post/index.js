@@ -9,6 +9,7 @@ export const getPosts = gql`
             createdAt
             headerTag
             isDeleted
+            commentTotal
             creator {
                 _id
                 username
@@ -51,6 +52,7 @@ export const createPost = gql`
             date
             createdAt
             isDeleted
+            commentTotal
             creator {
                 _id
                 username

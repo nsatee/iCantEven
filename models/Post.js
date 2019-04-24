@@ -14,7 +14,7 @@ const postSchema = new Schema(
             type: Date,
             required: true
         },
-        total: {
+        commentTotal: {
             type: Number,
             default: 0
         },
