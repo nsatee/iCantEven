@@ -14,6 +14,10 @@ const postSchema = new Schema(
             type: Date,
             required: true
         },
+        total: {
+            type: Number,
+            default: 0
+        },
         reaction: [
             {
                 type: Schema.Types.ObjectId,

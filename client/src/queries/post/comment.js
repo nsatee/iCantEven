@@ -82,9 +82,6 @@ export const addCommentFeeling = gql`
             comment {
                 _id
             }
-            comment {
-                _id
-            }
             creator {
                 _id
                 username

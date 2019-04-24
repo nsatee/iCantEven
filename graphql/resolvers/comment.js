@@ -31,6 +31,7 @@ module.exports = {
         try {
             const result = await comment.save();
             await post.comments.push(result._id);
+            await post.total++;
             await post.save();
             return commentFormat(comment);
         } catch (err) {
@@ -56,7 +57,6 @@ module.exports = {
                     ...result._doc,
                     createdAt: new Date(result._doc.createdAt).toISOString(),
                     creator: user.bind(this, result._doc.creator),
-                    post: singlePost.bind(this, result._doc.post)
                 };
             } else {
                 const result = await CommentFeeling.findOneAndUpdate(
@@ -78,7 +78,6 @@ module.exports = {
                     ...result._doc,
                     createdAt: new Date(result._doc.createdAt).toISOString(),
                     creator: user.bind(this, result._doc.creator),
-                    post: singlePost.bind(this, result._doc.post)
                 };
             }
         } catch (err) {

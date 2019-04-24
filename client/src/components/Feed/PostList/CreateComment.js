@@ -27,6 +27,7 @@ class CreateComment extends Component {
                     isDeleted: false
                 }
             });
+            target.blur();
             target.innerHTML = "";
         }
     };
@@ -65,11 +66,11 @@ export default graphql(addComment, {
                 query: getComments,
                 variables: { postId: addComment.post._id, first: props.first, skip: props.skip }
             });
-            data.comments.unshift(addComment);
+            const newData = [addComment,...data.comments]
             return cache.writeQuery({
                 query: getComments,
                 variables: { postId: addComment.post._id, first: props.first, skip: props.skip },
-                data
+                data: {comments: newData}
             });
 
         }

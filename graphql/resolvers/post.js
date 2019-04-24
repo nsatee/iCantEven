@@ -9,9 +9,9 @@ module.exports = {
     posts: async ({ uid }) => {
         function hasUid(uid) {
             if (uid) {
-                return { creator: uid };
+                return { creator: uid, isDeleted: false };
             }
-            return {};
+            return {isDeleted: false};
         }
         console.log(hasUid(uid));
         try {

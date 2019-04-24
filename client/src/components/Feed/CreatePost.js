@@ -22,7 +22,7 @@ export default class CreatePost extends Component {
                 mutation={createPost}
                 update={(cache, { data: { createPost } }) => {
                     const { posts } = cache.readQuery({ query: getPosts, variables: {uid: ""} });
-                    console.log(posts)
+                    
                     cache.writeQuery({
                         query: getPosts,
                         variables: {uid: ""},

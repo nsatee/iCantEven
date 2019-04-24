@@ -45,8 +45,9 @@
         height: 100%;
         z-index: 10;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
+        padding-top: 120px;
         flex-direction: column;
         background: rgba(0, 0, 0, .4);
 

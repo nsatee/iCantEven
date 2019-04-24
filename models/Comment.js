@@ -18,8 +18,19 @@ const commentSchema = new Schema(
             required: true
         },
         feelings: [
-            { type: Schema.Types.ObjectId, ref: "CommentFeeling", required: true }
+            {
+                type: Schema.Types.ObjectId,
+                ref: "CommentFeeling",
+                required: true
+            }
         ],
+        total: {
+            type: Number,
+            default: 0,
+            set: function(total) {
+                return this.prevName = this.name;
+            }
+        },
         isDeleted: {
             type: Boolean,
             default: false
@@ -29,6 +40,6 @@ const commentSchema = new Schema(
     { timestamps: true }
 );
 
-commentSchema.index({ "expireAt": 1 }, { expireAfterSeconds: 1 });
+commentSchema.index({ expireAt: 1 }, { expireAfterSeconds: 1 });
 
 module.exports = mongoose.model("Comment", commentSchema);

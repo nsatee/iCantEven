@@ -8,6 +8,7 @@ export const getPosts = gql`
             date
             createdAt
             headerTag
+            isDeleted
             creator {
                 _id
                 username
@@ -49,6 +50,7 @@ export const createPost = gql`
             body
             date
             createdAt
+            isDeleted
             creator {
                 _id
                 username

@@ -27,6 +27,9 @@ class Comment extends Component {
                         <CommentAction
                             comment={this.props.comment}
                             user={this.props.user}
+                            activeComment={this.props.activeComment.bind(this)}
+                            first={this.props.first}
+                            skip={this.props.skip}
                         />
                     </div>
                 </div>
