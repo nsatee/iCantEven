@@ -6,6 +6,7 @@ const { user, singlePost, commentFormat } = require("./merge");
 module.exports = {
     comments: async ({ postId, first = null, skip = null }) => {
         const comments = await Comment.find({ post: postId })
+            .sort({ createdAt: -1 })
             .skip(skip)
             .limit(first)
             .exec();
@@ -56,7 +57,7 @@ module.exports = {
                 return {
                     ...result._doc,
                     createdAt: new Date(result._doc.createdAt).toISOString(),
-                    creator: user.bind(this, result._doc.creator),
+                    creator: user.bind(this, result._doc.creator)
                 };
             } else {
                 const result = await CommentFeeling.findOneAndUpdate(
@@ -77,7 +78,7 @@ module.exports = {
                 return {
                     ...result._doc,
                     createdAt: new Date(result._doc.createdAt).toISOString(),
-                    creator: user.bind(this, result._doc.creator),
+                    creator: user.bind(this, result._doc.creator)
                 };
             }
         } catch (err) {
