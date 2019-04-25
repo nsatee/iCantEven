@@ -85,16 +85,16 @@ button,
     cursor: pointer;
     border-radius: 5px;
     transition: .2s;
+
+    &:hover {
+        transform: scale(1.05);
+    }
 }
 
 
 .btn-blue {
     background: $blue;
     color: $white;
-
-    &:hover {
-        transform: scale(1.05);
-    }
 }
 
 .dropdown {
@@ -140,4 +140,22 @@ button,
     background: $gray;
     border: $border-basic;
     box-sizing: border-box;
+}
+
+.notfound {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .mainpage-link {
+        background: $gold;
+        padding: 15px 40px;
+        color: $white;
+        font-size: 16px;
+        border-radius: 40px;
+        margin-top: 20px;
+    }
 }

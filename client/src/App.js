@@ -81,7 +81,7 @@ class App extends Component {
                                                 createPost={false}
                                                 currentUser={data && data.tokenLogin}
                                             />
-                                            <Route component={Notfound} />
+                                            <Route render={() => <Notfound auth={signinRoute}/>} />
                                         </Switch>
                                     </main>
                                 </React.Fragment>
