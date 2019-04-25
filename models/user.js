@@ -18,9 +18,13 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Post'
     }],
-    reacted: [{
+    following: [{
         type: Schema.Types.ObjectId,
-        ref: 'Reaction'
+        ref: 'User'
+    }],
+    follower: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }]
 }); 
 

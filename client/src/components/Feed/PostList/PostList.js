@@ -5,17 +5,25 @@ import { getPosts } from "../../../queries";
 import CreatePost from "../CreatePost";
 import Post from "./Post";
 
-const PostListContent = props => {
-    const { posts, user, createPost } = props;
-    return (
-        <React.Fragment>
-            {user._id && createPost && <CreatePost user={user} />}
-            {posts.map(post => {
-                return <Post key={post._id} user={user} post={post} />;
-            })}
-        </React.Fragment>
-    );
-};
+class PostListContent extends Component {
+    render() {
+        const { user, createPost, posts } = this.props;
+        return (
+            <React.Fragment>
+                {posts && createPost && <CreatePost user={user} />}
+                {posts.map(post => {
+                    return (
+                        <Post
+                            key={post._id}
+                            user={user}
+                            post={post}
+                        />
+                    );
+                })}
+            </React.Fragment>
+        );
+    }
+}
 
 class PostList extends Component {
     render() {

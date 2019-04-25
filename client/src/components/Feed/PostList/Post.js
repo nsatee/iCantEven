@@ -26,9 +26,8 @@ class Post extends Component {
         return { reacted: false, reactionId: null };
     }
     render() {
-        const { post, user } = this.props;
+        const { post, user, updatePost } = this.props;
         const { confirmDelete } = this.state;
-
         return (
             <div className="post-item" key={post._id}>
                 {confirmDelete && (

@@ -18,7 +18,6 @@ class CommentList extends Component {
     };
 
     activeComment(id) {
-        console.log(id);
         let commentsData = [];
         this.state.comments.map(comment => {
             if (comment._id === id) {
@@ -31,17 +30,15 @@ class CommentList extends Component {
         });
 
         this.setState({ comments: commentsData });
-        console.log(this.state.comments);
     }
 
     addedComment(newComment) {
-        console.log(newComment);
         this.setState({ comments: [newComment, ...this.state.comments] });
-        console.log(this.state.comments);
     }
 
+    
+
     render() {
-        console.log(this.state);
         return (
             <div className="comment-list">
                 <CreateComment
