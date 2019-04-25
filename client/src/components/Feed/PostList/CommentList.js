@@ -5,11 +5,16 @@ import { Query } from "react-apollo";
 import { getComments } from "../../../queries/post/comment";
 
 class CommentList extends Component {
+    comments = [];
+    first = 3;
+    skip = 0;
+    total = this.props.total - 3;
+
     state = {
-        comments: [],
-        skip: 0,
-        first: 3,
-        total: this.props.total - 3
+        comments: this.comments,
+        skip: this.skip,
+        first: this.first,
+        total: this.total
     };
 
     activeComment(id) {
@@ -36,7 +41,7 @@ class CommentList extends Component {
     }
 
     render() {
-        console.log(this.state.comments);
+        console.log(this.state);
         return (
             <div className="comment-list">
                 <CreateComment
@@ -80,13 +85,12 @@ class CommentList extends Component {
                                 </React.Fragment>
                             );
                         if (error) console.log(error);
-                        const commentsData = [
-                            ...this.state.comments,
-                            ...comments
-                        ];
+
+                        const fetchComments = [...this.state.comments, ...comments];
+
                         return (
                             <React.Fragment>
-                                {commentsData.map(comment => (
+                                {fetchComments.map(comment => (
                                     <div
                                         className="comment-list__wrapper"
                                         key={comment._id}
@@ -97,8 +101,8 @@ class CommentList extends Component {
                                             activeComment={this.activeComment.bind(
                                                 this
                                             )}
-                                            first={this.state.first}
-                                            skip={this.state.skip}
+                                            first={this.first}
+                                            skip={this.skip}
                                         />
                                     </div>
                                 ))}
@@ -106,21 +110,12 @@ class CommentList extends Component {
                                     <div className="loadmore-wrapper">
                                         <button
                                             className="load-comments"
-                                            onClick={() =>
-                                                this.setState({
-                                                    first:
-                                                        this.state.first === 3
-                                                            ? this.state.first
-                                                            : this.state.first +
-                                                              10,
-                                                    skip: this.state.skip + 10,
-                                                    comments: [
-                                                        ...this.state.comments,
-                                                        ...comments
-                                                    ],
-                                                    total: this.state.total - 10
-                                                })
-                                            }
+                                            onClick={() => {
+                                                this.setState({first: this.state.first <= 3 ? 5 : this.state.first})
+                                                this.setState({skip: this.state.skip <= 0 ? 3 : this.state.skip + 5})
+                                                this.setState({comments: [...this.state.comments, ...comments]});
+                                                this.setState({total: this.state.total - 5});
+                                            }}
                                         >
                                             {`${this.state.total} more comment${
                                                 this.state.total > 1 ? "s" : ""
