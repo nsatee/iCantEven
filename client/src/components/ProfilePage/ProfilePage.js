@@ -22,7 +22,6 @@ class ProfilePage extends Component {
         user: {}
     };
     render() {
-        // console.log(this.props);
         const { profileId } = this.props.match.params;
         const { loading, getUser } = this.props.getUser;
         if (loading) return "loading";

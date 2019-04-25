@@ -3,18 +3,18 @@ import moment from 'moment';
 moment.locale("en", {
     relativeTime: {
         future: "in %s",
-        past: "%s ago",
-        s: "seconds",
+        past: "%s",
+        s: "just now",
         ss: "%ss",
-        m: "a minute",
+        m: "1m",
         mm: "%dm",
         h: "an hour",
         hh: "%dh",
-        d: "a day",
+        d: "yesterday",
         dd: "%dd",
         M: "a month",
         MM: "%dM",
-        y: "a year",
+        y: "last year",
         yy: "%dY"
     }
 });

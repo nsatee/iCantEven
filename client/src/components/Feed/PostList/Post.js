@@ -28,6 +28,7 @@ class Post extends Component {
     render() {
         const { post, user, updatePost } = this.props;
         const { confirmDelete } = this.state;
+        console.log(this.props);
         return (
             <div className="post-item" key={post._id}>
                 {confirmDelete && (

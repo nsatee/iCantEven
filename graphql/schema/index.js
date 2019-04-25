@@ -48,6 +48,8 @@ type User {
     password: String
     createdPosts: [Post!]
     reacted: [Reaction!]
+    following: [ID!]!
+    follower: [ID!]!
 }
 type AuthData {
     userId: ID!
@@ -92,6 +94,7 @@ type RootMutation {
     addReaction(type: Int!, post: ID!, date: String!, hasReacted: Boolean, reactionId: ID): Reaction!
     addComment(commentInput: CommentInput): Comment!
     addCommentFeeling(comment: ID!, isDeleted: Boolean!, feelingId: ID): CommentFeeling!
+    followAction(uid: ID!): User!
 }
 schema {
     query: RootQuery

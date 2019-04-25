@@ -4,7 +4,7 @@ import { graphql, Query } from "react-apollo";
 
 import "./components/common/momentFormat";
 import { tokenLogin } from "./queries";
-import AuthPage from "./pages/Auth";
+import AuthPage from "./pages/Signin";
 import Feed from "./pages/Feed";
 import MainNavigation from "./components/Navigation/MainNotification";
 import AuthContext from "./context/auth-context";
