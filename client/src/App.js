@@ -4,6 +4,7 @@ import { graphql, Query } from "react-apollo";
 
 import "./components/common/momentFormat";
 import { tokenLogin } from "./queries";
+import OnlyNoAuthRoute from './components/common/OnlyNoAuthRoute';
 import AuthPage from "./pages/Signin";
 import Feed from "./pages/Feed";
 import MainNavigation from "./components/Navigation/MainNotification";
@@ -66,7 +67,8 @@ class App extends Component {
                                                     )
                                                 }
                                             />
-                                            <Route
+                                            <OnlyNoAuthRoute
+                                                auth={signinRoute}
                                                 path="/signup"
                                                 component={Signup}
                                             />

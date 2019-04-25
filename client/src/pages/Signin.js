@@ -59,7 +59,7 @@ class AuthPage extends Component {
                                 />
                             </div>
                             <div className="form-actions">
-                                <button type="submit" className="submit">Submit</button>
+                                <button type="submit" className="submit">Signin</button>
                                 <Link to="/signup" className="link-action">Create an account</Link>
                             </div>
                         </form>
