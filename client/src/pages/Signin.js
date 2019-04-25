@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 
 import { login } from "../queries";
 import AuthContext from "../context/auth-context";
+import { Loading } from "../components/common/Loading";
 
 class AuthPage extends Component {
-    state = { email: "", password: "" };
+    state = { email: "", password: "", loading: false };
 
     static contextType = AuthContext;
 
@@ -24,6 +25,7 @@ class AuthPage extends Component {
                             className="auth-form"
                             onSubmit={async e => {
                                 e.preventDefault();
+                                this.setState({ loading: true });
                                 const { data } = await client.query({
                                     query: login,
                                     variables: {
@@ -59,8 +61,16 @@ class AuthPage extends Component {
                                 />
                             </div>
                             <div className="form-actions">
-                                <button type="submit" className="submit">Signin</button>
-                                <Link to="/signup" className="link-action">Create an account</Link>
+                                <button type="submit" className="submit">
+                                    {this.state.loading ? (
+                                        <Loading />
+                                    ) : (
+                                        "Signin"
+                                    )}
+                                </button>
+                                <Link to="/signup" className="link-action">
+                                    Create an account
+                                </Link>
                             </div>
                         </form>
                     </div>

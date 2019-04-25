@@ -1,8 +1,8 @@
 @import 'var';
 @import 'reset'; 
+@import 'common';
+@import 'basic';
 
-@import 'components/common';
-@import 'components/basic';
 @import 'components/auth';
 @import 'components/MainNavigation';
 @import 'components/Feed';
