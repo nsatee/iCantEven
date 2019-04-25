@@ -8,7 +8,7 @@ const ProfileMarkup = props => {
     return (
         <div className="profile main-wrapper">
             <div className="profile_panel main-wrapper_panel">
-                <ProfilePanel user={props.profileUser} />
+                <ProfilePanel user={props.profileUser} currentUser={props.currentUser} isProfilePage={true}/>
             </div>
             <div className="profile_content main-wrapper_content">
                 <PostList user={props.currentUser} userPost={props.userPost} />

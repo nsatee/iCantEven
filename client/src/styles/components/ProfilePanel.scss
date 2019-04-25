@@ -1,10 +1,12 @@
 
 .profile-panel {
     width: 100%;
-    border-radius: 5px;
-    border: $border-basic;
+    border-radius: 20px;
+    border: $border-basic !important;
     background: $lite-black;
-    box-shadow: $nav-shadow;
+    padding: 10px 10px 20px 10px;
+    box-shadow: $nav-shadow !important;
+    
 
 
     &__wrapper {
@@ -23,6 +25,41 @@
             margin-top: 10px;
             font-size: 2em;
             font-weight: bold;
+        }
+    }
+
+    .stalker-total {
+        display: flex;
+        justify-content: center;
+        background: $gray;
+        border: $border-basic;
+        color: $white;
+        border-radius: 20px;
+        box-shadow: $nav-shadow;
+
+        h2 {
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            span {
+                margin-top: 5px;
+            }
+        }
+    }
+
+    &__action {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+        
+        button {
+            padding: 10px 30px;
+            font-size: 16px;
+            border-radius: 20px;
+            background: transparent;
+            color: $blue;
+            border: 2px solid $blue;
         }
     }
 }
