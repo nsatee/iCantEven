@@ -4,14 +4,17 @@ import { graphql, Query } from "react-apollo";
 
 import "./components/common/momentFormat";
 import { tokenLogin } from "./queries";
-import OnlyNoAuthRoute from './components/common/OnlyNoAuthRoute';
+
 import AuthPage from "./pages/Signin";
 import Feed from "./pages/Feed";
 import MainNavigation from "./components/Navigation/MainNotification";
 import AuthContext from "./context/auth-context";
 import Signup from "./pages/Signup";
+import Notfound from './pages/NotFound';
+
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import RouteOrigin from "./components/common/RouteOrigin";
+import OnlyNoAuthRoute from './components/common/OnlyNoAuthRoute';
 
 class App extends Component {
     state = {
@@ -78,6 +81,7 @@ class App extends Component {
                                                 createPost={false}
                                                 currentUser={data && data.tokenLogin}
                                             />
+                                            <Route component={Notfound} />
                                         </Switch>
                                     </main>
                                 </React.Fragment>
