@@ -64,6 +64,14 @@ export const getUser = gql`
             _id
             username
             email
+            following {
+                _id
+                username
+            }
+            follower {
+                _id
+                username
+            }
         }
     }
 `;

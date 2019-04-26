@@ -3,6 +3,7 @@ import { Mutation } from "react-apollo";
 import ContentEditable from "react-contenteditable";
 
 import { createPost, getPosts } from "../../queries";
+import { Loading } from "../common/Loading";
 
 export default class CreatePost extends Component {
     state = {
@@ -80,7 +81,7 @@ export default class CreatePost extends Component {
                                             type="submit"
                                             className="create-btn btn-blue"
                                         >
-                                            {loading ? "Loading" : "Post"}
+                                            {loading ? <Loading /> : "Post"}
                                         </button>
                                     </div>
                                 </form>

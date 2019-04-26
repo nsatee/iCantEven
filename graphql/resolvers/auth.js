@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../../models/user");
-const { populateReactions, posts } = require("./merge");
+const { populateReactions, posts, userFormat } = require("./merge");
 
 module.exports = {
     createUser: async args => {
@@ -62,19 +62,13 @@ module.exports = {
         const decodedToken = await jwt.verify(token, "secreatKey");
         if (decodedToken) {
             const user = await User.findOne({ email: decodedToken.email });
-            return {
-                _id: user._id,
-                createdPosts: posts(user.createdPosts),
-                email: user.email,
-                username: user.username,
-                reacted: populateReactions(user.reacted)
-            };
+            return userFormat(user);
         }
     },
     getUser: async ({ id }) => {
         try {
             const user = await User.findById(id);
-            return { ...user._doc, createdPosts: posts(user.createdPosts) };
+            return userFormat(user);
         } catch (err) {
             throw err;
         }

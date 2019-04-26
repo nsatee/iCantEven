@@ -8,6 +8,7 @@ import Post from "./Post";
 class PostListContent extends Component {
     render() {
         const { user, createPost, posts } = this.props;
+        console.log(posts);
         return (
             <React.Fragment>
                 {posts && createPost && <CreatePost user={user} />}

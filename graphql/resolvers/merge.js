@@ -51,9 +51,21 @@ const feelingFormat = feeling => {
         ...feeling._doc,
         creator: user.bind(this, feeling._doc.creator),
         comment: singleComment.bind(this, feeling._doc.comment),
-        createdAt: new Date(feeling._doc.createdAt).toISOString(),
+        createdAt: new Date(feeling._doc.createdAt).toISOString()
     };
-}
+};
+
+const userFormat = userData => {
+    // const ha = userData.following.map(following => user.bind(this, following))
+    // console.log(ha)
+    return {
+        ...userData._doc,
+        createdPosts: posts.bind(this, userData.createdPosts),
+        reacted: populateReactions(userData.reacted),
+        following: users.bind(this, userData.following),
+        follower: users.bind(this, userData.follower)
+    };
+};
 //==============================//
 
 const posts = async postIds => {
@@ -74,10 +86,23 @@ const posts = async postIds => {
     }
 };
 
+const users = async usersIds => {
+    try {
+        const users = await User.find({ _id: { $in: usersIds } });
+        console.log(users);
+        return users.map(user => {
+            console.log(user);
+            return userFormat(user)
+        });
+    } catch (err) {
+        throw err;
+    }
+};
+
 const comments = async commentIds => {
     try {
         const comments = await Comment.find({ _id: { $in: commentIds } });
-        
+
         return comments.map(comment => {
             return commentFormat(comment);
         });
@@ -111,7 +136,7 @@ const feelings = async feelingIds => {
 const singlePost = async postId => {
     try {
         const post = await postsLoader.load(postId.toString());
-        
+
         return post;
     } catch (err) {
         throw err;
@@ -138,6 +163,7 @@ const user = async userId => {
     try {
         return {
             ...user._doc,
+            password: null,
             createdPosts: () => postsLoader.loadMany(user._doc.createdPosts)
         };
     } catch (err) {
@@ -153,3 +179,4 @@ exports.feelings = feelings;
 
 exports.commentFormat = commentFormat;
 exports.postFormat = postFormat;
+exports.userFormat = userFormat;

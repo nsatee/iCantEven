@@ -5,7 +5,11 @@ const OnlyNoAuthRoute = ({ component: Component, authed, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            authed ? <Component {...props} /> : <Redirect to="/" />
+            
+            {
+                console.log(authed)
+                return authed ? <Component {...props} /> : <Redirect to="/" />
+            }
         }
     />
 );

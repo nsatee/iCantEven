@@ -3,6 +3,7 @@ import Comment from "./Comment";
 import CreateComment from "./CreateComment";
 import { Query } from "react-apollo";
 import { getComments } from "../../../queries/post/comment";
+import { Loading } from "../../common/Loading";
 
 class CommentList extends Component {
     comments = [];
@@ -76,7 +77,7 @@ class CommentList extends Component {
                                     ))}
                                     <div className="loadmore-wrapper">
                                         <button className="load-comments">
-                                            Loading
+                                            <Loading />
                                         </button>
                                     </div>
                                 </React.Fragment>

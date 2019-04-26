@@ -1,23 +1,27 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import { createUser } from "../queries/auth";
+import { Loading } from "../components/common/Loading";
 
 class Signup extends Component {
     state = {
         username: "",
         password: "",
         confirmPassword: "",
-        email: ""
+        email: "",
+        loading: false
     };
+
     render() {
         const { username, password, confirmPassword, email } = this.state;
-
+        if (this.props.auth) return <Redirect to="/" />;
         return (
             <Mutation mutation={createUser}>
                 {(createUser, { data }) => (
                     <div className="auth-container">
+                        {data && <Redirect to="/" />}
                         <form
                             className="auth-form"
                             onSubmit={e => {
@@ -25,13 +29,7 @@ class Signup extends Component {
                                 createUser({
                                     variables: { username, password, email }
                                 });
-                                this.setState({
-                                    username: "",
-                                    password: "",
-                                    email: "",
-                                    confirmPassword: ""
-                                });
-                                this.props.history.push("/");
+                                this.setState({ loading: true });
                             }}
                         >
                             <div className="form-control">
@@ -90,7 +88,11 @@ class Signup extends Component {
                             </div>
                             <div className="form-actions">
                                 <button type="submit" className="submit">
-                                    Signup
+                                    {this.state.loading ? (
+                                        <Loading />
+                                    ) : (
+                                        "Signup"
+                                    )}
                                 </button>
                                 <Link to="/" className="link-action">
                                     Alreadt had an account? Signin

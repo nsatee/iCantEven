@@ -24,6 +24,8 @@ class App extends Component {
         signedIn: false
     };
 
+    signinRoute = false;
+
     login = (token, userId) => {
         this.setState({ token: token, userId: userId, signedIn: true });
         localStorage.setItem("token", token);
@@ -32,7 +34,6 @@ class App extends Component {
 
     render() {
         const token = localStorage.getItem("token");
-        let signinRoute;
         return (
             <AuthContext.Provider
                 value={{
@@ -44,7 +45,7 @@ class App extends Component {
                 <Query query={tokenLogin} variables={{ token }}>
                     {({ loading, error, data }) => {
                         if (loading) return "Loading...";
-                        !error ? (signinRoute = true) : (signinRoute = false);
+                        !error ? (this.signinRoute = true) : (this.signinRoute = false);
                         return (
                             <BrowserRouter>
                                 <React.Fragment>
@@ -58,7 +59,7 @@ class App extends Component {
                                                 exact
                                                 path="/"
                                                 render={() =>
-                                                    signinRoute ? (
+                                                    this.signinRoute ? (
                                                         <Feed
                                                             user={
                                                                 data.tokenLogin
@@ -70,9 +71,9 @@ class App extends Component {
                                                     )
                                                 }
                                             />
-                                            <OnlyNoAuthRoute
-                                                auth={signinRoute}
+                                            <RouteOrigin
                                                 path="/signup"
+                                                auth={this.signinRoute}
                                                 component={Signup}
                                             />
                                             <RouteOrigin
@@ -81,7 +82,7 @@ class App extends Component {
                                                 createPost={false}
                                                 currentUser={data && data.tokenLogin}
                                             />
-                                            <Route render={() => <Notfound auth={signinRoute}/>} />
+                                            <Route render={() => <Notfound auth={this.signinRoute}/>} />
                                         </Switch>
                                     </main>
                                 </React.Fragment>

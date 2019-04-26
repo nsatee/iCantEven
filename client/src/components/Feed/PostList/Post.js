@@ -26,7 +26,7 @@ class Post extends Component {
         return { reacted: false, reactionId: null };
     }
     render() {
-        const { post, user, updatePost } = this.props;
+        const { post, user } = this.props;
         const { confirmDelete } = this.state;
         console.log(this.props);
         return (
@@ -36,6 +36,7 @@ class Post extends Component {
                         <h3>Are you sure you want to delete the post?</h3>
                         <div className="action">
                             <button
+                                className="btn"
                                 onClick={() =>
                                     this.setState({ confirmDelete: false })
                                 }
@@ -43,7 +44,7 @@ class Post extends Component {
                                 Nope
                             </button>
                             <button
-                                className="delete"
+                                className="delete btn"
                                 onClick={() => this.handleDeletePost(post._id)}
                             >
                                 Sure
