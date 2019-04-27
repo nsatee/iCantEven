@@ -86,6 +86,7 @@ type RootQuery {
     reaction(postId: ID!): [Reaction]!
     tokenLogin(token: String): User!
     getUser(id: ID!): User!
+    getUsers: User!
 }
 type RootMutation {
     createPost(postInput: PostInput): Post!

@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { graphql, Query } from "react-apollo";
-
 import "./components/common/momentFormat";
+
 import { tokenLogin } from "./queries";
+import AuthContext from "./context/auth-context";
 
 import AuthPage from "./pages/Signin";
 import Feed from "./pages/Feed";
 import MainNavigation from "./components/Navigation/MainNotification";
-import AuthContext from "./context/auth-context";
 import Signup from "./pages/Signup";
 import Notfound from './pages/NotFound';
 
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import RouteOrigin from "./components/common/RouteOrigin";
-import OnlyNoAuthRoute from './components/common/OnlyNoAuthRoute';
 
 class App extends Component {
     state = {

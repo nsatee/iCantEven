@@ -28,7 +28,6 @@ class Post extends Component {
     render() {
         const { post, user } = this.props;
         const { confirmDelete } = this.state;
-        console.log(this.props);
         return (
             <div className="post-item" key={post._id}>
                 {confirmDelete && (
@@ -150,16 +149,13 @@ export default graphql(deletePost, {
     name: "deletePost",
     options: props => ({
         update: (cache, { data: { deletePost } }) => {
-            console.log(deletePost);
             const data = cache.readQuery({
                 query: getPosts,
                 variables: { uid: "" }
             });
-            console.log(data);
             const newData = data.posts.filter(post => {
                 return post._id !== deletePost._id;
             });
-            console.log(newData);
             return cache.writeQuery({
                 query: getPosts,
                 variables: { uid: "" },

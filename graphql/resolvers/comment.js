@@ -17,7 +17,6 @@ module.exports = {
 
     comment: async ({ id }) => {
         const comment = await Comment.findById(id);
-        console.log(comment);
         return commentFormat(comment);
     },
 
@@ -68,7 +67,6 @@ module.exports = {
                     }
                 );
 
-                console.log(result);
 
                 await Comment.findOneAndUpdate(
                     { _id: args.comment },

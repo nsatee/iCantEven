@@ -13,7 +13,6 @@ module.exports = {
             }
             return {isDeleted: false};
         }
-        console.log(hasUid(uid));
         try {
             const posts = await Post.find(hasUid(uid)).sort({ createdAt: -1 });
             return posts.map(post => {
@@ -71,7 +70,6 @@ module.exports = {
                     expireAt: new Date(new Date().toISOString())
                 }
             );
-            console.log(result);
 
             await User.findOneAndUpdate(
                 { _id: result.creator },

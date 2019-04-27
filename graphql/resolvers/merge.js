@@ -56,8 +56,7 @@ const feelingFormat = feeling => {
 };
 
 const userFormat = userData => {
-    // const ha = userData.following.map(following => user.bind(this, following))
-    // console.log(ha)
+    console.log(userData);
     return {
         ...userData._doc,
         createdPosts: posts.bind(this, userData.createdPosts),
@@ -71,6 +70,8 @@ const userFormat = userData => {
 const posts = async postIds => {
     try {
         const posts = await Post.find({ _id: { $in: postIds } });
+
+        console.log(posts)
         posts.sort((a, b) => {
             return (
                 postIds.indexOf(a._id.toString()) -
@@ -89,9 +90,13 @@ const posts = async postIds => {
 const users = async usersIds => {
     try {
         const users = await User.find({ _id: { $in: usersIds } });
-        console.log(users);
+        users.sort((a, b) => {
+            return (
+                usersIds.indexOf(a._id.toString()) -
+                usersIds.indexOf(b._id.toString())
+            );
+        });
         return users.map(user => {
-            console.log(user);
             return userFormat(user)
         });
     } catch (err) {
@@ -102,7 +107,6 @@ const users = async usersIds => {
 const comments = async commentIds => {
     try {
         const comments = await Comment.find({ _id: { $in: commentIds } });
-
         return comments.map(comment => {
             return commentFormat(comment);
         });

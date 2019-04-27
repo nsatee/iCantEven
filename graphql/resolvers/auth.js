@@ -49,6 +49,7 @@ module.exports = {
                 expiresIn: "1y"
             }
         );
+        console.log(token, user._id, user._id);
         return {
             userId: user.id,
             _id: user._id,
@@ -69,6 +70,16 @@ module.exports = {
         try {
             const user = await User.findById(id);
             return userFormat(user);
+        } catch (err) {
+            throw err;
+        }
+    },
+    getUsers: async () => {
+        try {
+            const users = await User.find({});
+            return users.map(user => {
+                return userFormat(user);
+            });
         } catch (err) {
             throw err;
         }

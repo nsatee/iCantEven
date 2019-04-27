@@ -7,7 +7,6 @@ const OnlyNoAuthRoute = ({ component: Component, authed, ...rest }) => (
         render={props =>
             
             {
-                console.log(authed)
                 return authed ? <Component {...props} /> : <Redirect to="/" />
             }
         }

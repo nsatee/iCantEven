@@ -31,7 +31,6 @@ class CommentAction extends Component {
             <Mutation
                 mutation={addCommentFeeling}
                 update={(cache, { data: { addCommentFeeling } }) => {
-                    console.log(addCommentFeeling);
                     const data = cache.readQuery({
                         query: getComments,
                         variables: {
