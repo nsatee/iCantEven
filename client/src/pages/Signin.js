@@ -12,7 +12,6 @@ class AuthPage extends Component {
     static contextType = AuthContext;
 
     handleLogin = ({ login }) => {
-        console.log(login);
         this.context.login(login.token, login.userId, login.email);
     };
 

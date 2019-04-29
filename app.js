@@ -19,8 +19,9 @@ app.use(
     graphqlHttp({
         schema: graphQlSchema,
         rootValue: graphQlResolvers,
-        graphiql: true
-    })
+        graphiql: true,
+        query: ``
+    }),
 );
 
 mongoose.connect(

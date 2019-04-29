@@ -18,6 +18,7 @@ class ProfilePanel extends Component {
                 </div>
                 {this.props.isProfilePage && (
                     <ProfileAction
+                        getUser={this.props.getUser.bind(this)}
                         user={this.props.user}
                         currentUser={this.props.currentUser}
                     />

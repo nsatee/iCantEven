@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
+import Icon from "../svg/Icon";
 
 const logout = e => {
     e.preventDefault();
@@ -16,13 +17,16 @@ class MainNavigation extends Component {
         return (
             <header className="main-navigation">
                 <nav className="main-navigation__items">
-                    <div className="main-navigation__logo">
-                        <h1>LETStalk</h1>
-                    </div>
+                    <Link to="/">
+                        <div className="main-navigation__logo">
+                            <h1>LETStalk</h1>
+                        </div>
+                    </Link>
                     <ul>
                         {props.signedIn && (
                             <React.Fragment>
                                 <li
+                                    className="menu-item"
                                     onClick={() =>
                                         this.setState({
                                             isOpen: false
@@ -30,23 +34,33 @@ class MainNavigation extends Component {
                                     }
                                 >
                                     <NavLink exact to="/">
-                                        Feed
+                                        <Icon name="feed" />
                                     </NavLink>
                                 </li>
                                 <li className="profile">
                                     <div
-                                        className="profile-thumbnail"
+                                        className="nav-profile__wrapper"
                                         onClick={() =>
                                             this.setState({
                                                 isOpen: !this.state.isOpen
                                             })
                                         }
                                     >
-                                        <span>{props.user.username[0]}</span>
+                                        <div className="profile-thumbnail">
+                                            <span>
+                                                {props.user.username[0]}
+                                            </span>
+                                        </div>
+                                        <span className="username">
+                                            {props.user.username}
+                                        </span>
                                     </div>
                                     {this.state.isOpen && (
                                         <ul
                                             className="dropdown"
+                                            onMouseLeave={() => this.setState({
+                                                isOpen: false
+                                            })}
                                             onClick={() =>
                                                 this.setState({
                                                     isOpen: !this.state.isOpen

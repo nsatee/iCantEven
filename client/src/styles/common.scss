@@ -145,6 +145,27 @@ button,
     box-sizing: border-box;
 }
 
+.error {
+    position: fixed;
+    width: 70vw;
+    min-height: 50px;
+    left: 15vw;
+    top: 40px;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $red;
+    border-radius: 20px;
+    box-shadow: $nav-shadow;
+    opacity: 0;
+    transition: opacity .2s .2s;
+
+    &.show {
+        opacity: 1;
+    }
+}
+
 .notfound {
     display: flex;
     width: 100vw;
@@ -162,6 +183,8 @@ button,
         margin-top: 20px;
     }
 }
+
+
 
 //Loading animation
 

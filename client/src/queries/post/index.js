@@ -36,14 +36,12 @@ export const createPost = gql`
         $body: String!
         $date: String!
         $headerTag: String
-        $creator: ID!
     ) {
         createPost(
             postInput: {
                 body: $body
                 date: $date
                 headerTag: $headerTag
-                creator: $creator
             }
         ) {
             _id

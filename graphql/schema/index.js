@@ -64,7 +64,6 @@ input PostInput {
     body: String!
     headerTag: String
     date: String!
-    creator: ID!
 }
 input UserInput {
     email: String!

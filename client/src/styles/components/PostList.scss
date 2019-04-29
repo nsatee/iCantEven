@@ -123,6 +123,11 @@
     &__body {
         margin-top: 20px;
         width: 100%;
+        line-height: 1.2em;
+        div {
+            margin: 15px 0;
+            word-break: break-word;
+        }
     }
 
     &__tag {

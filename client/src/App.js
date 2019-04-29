@@ -44,6 +44,7 @@ class App extends Component {
                 <Query query={tokenLogin} variables={{ token }}>
                     {({ loading, error, data }) => {
                         if (loading) return "Loading...";
+                        console.log(data);
                         !error ? (this.signinRoute = true) : (this.signinRoute = false);
                         return (
                             <BrowserRouter>

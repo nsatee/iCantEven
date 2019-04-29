@@ -40,7 +40,7 @@ module.exports = {
             body: args.postInput.body,
             headerTag: args.postInput.headerTag,
             date: new Date(args.postInput.date),
-            creator: args.postInput.creator
+            creator: req.userId
         });
         try {
             const result = await post.save();

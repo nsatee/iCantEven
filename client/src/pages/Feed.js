@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 
-import AuthContext from "../context/auth-context";
-
-import CreatePost from "../components/Feed/CreatePost";
 import PostList from "../components/Feed/PostList/PostList";
 import ProfilePanel from "../components/Feed/ProfilePanel";
 
@@ -12,8 +9,6 @@ class Feed extends Component {
         posts: [],
         isLoading: false
     };
-
-    static contextType = AuthContext;
 
     render() {
         return (

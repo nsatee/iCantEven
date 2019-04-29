@@ -1,4 +1,3 @@
-
 .profile-panel {
     width: 100%;
     border-radius: 20px;
@@ -6,7 +5,7 @@
     background: $lite-black;
     padding: 10px 10px 20px 10px;
     box-shadow: $nav-shadow !important;
-    
+
 
 
     &__wrapper {
@@ -14,6 +13,7 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+
         .thumbnail {
             width: 20vw;
             height: 20vw;
@@ -36,12 +36,19 @@
         color: $white;
         border-radius: 20px;
         box-shadow: $nav-shadow;
+        cursor: pointer;
+        transition: .2s;
+
+        &:hover {
+            transform: scale(1.03);
+        }
 
         h2 {
             padding: 10px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+
             span {
                 margin-top: 5px;
             }
@@ -52,7 +59,7 @@
         display: flex;
         justify-content: center;
         margin-top: 25px;
-        
+
         button {
             padding: 10px 30px;
             font-size: 16px;
@@ -60,6 +67,122 @@
             background: transparent;
             color: $blue;
             border: 2px solid $blue;
+            width: 150px;
+
+            &.active {
+                background: $blue;
+                color: $white;
+            }
+        }
+    }
+}
+
+.userlist {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+
+    .fade {
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, .5);
+        position: fixed;
+        z-index: 10;
+    }
+
+    .header {
+        margin-bottom: 20px;
+
+        ul {
+            width: 100%;
+            display: flex;
+            background: $gray;
+            border: $border-basic;
+            border-radius: 20px;
+            overflow: hidden;
+            z-index: 100;
+
+
+            li {
+                width: 50%;
+
+                &.active {
+                    background: $gold;
+                    color: $black;
+                }
+
+                &:first-child {
+                    border-right: $border-basic;
+                }
+
+                button {
+                    width: 100%;
+                    height: 60px;
+                    color: $white;
+                    font-size: 16px;
+
+                    &:hover {
+                        transform: none;
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    &-container {
+        width: 100%;
+        max-width: 600px;
+        height: 80%;
+        background: $gray;
+        position: relative;
+        top: 10%;
+        z-index: 20;
+        border: $border-basic;
+        border-radius: 20px;
+        margin: 0 auto;
+        box-shadow: $nav-shadow;
+        padding: 20px;
+        overflow: scroll;
+
+        .user {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background: $dark-black;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: $nav-shadow;
+            transition: .2s;
+            margin-bottom: 10px;
+
+            &:hover {
+                transform: scale(1.02);
+            }
+
+            .info {
+                display: flex;
+                align-items: center;
+
+                .thumbnail {
+                    width: 50px;
+                    height: 50px;
+                    font-size: 20px;
+                    margin-right: 10px;
+                }
+
+                .meta {
+                    .username {
+                        font-weight: bold;
+                        font-size: 16px;
+                        color: $white;
+                    }
+                }
+            }
         }
     }
 }

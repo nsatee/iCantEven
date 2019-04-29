@@ -56,7 +56,6 @@ const feelingFormat = feeling => {
 };
 
 const userFormat = userData => {
-    console.log(userData);
     return {
         ...userData._doc,
         createdPosts: posts.bind(this, userData.createdPosts),
@@ -164,6 +163,7 @@ const populateReactions = async reactionIds => {
 
 const user = async userId => {
     const user = await userLoader.load(userId.toString());
+    console.log(user);
     try {
         return {
             ...user._doc,

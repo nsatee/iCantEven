@@ -49,7 +49,6 @@ module.exports = {
                 expiresIn: "1y"
             }
         );
-        console.log(token, user._id, user._id);
         return {
             userId: user.id,
             _id: user._id,
