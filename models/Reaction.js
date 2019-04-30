@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+delete mongoose.connection.models['Reaction'];
 const reactionSchema = new Schema(
     {
         post: {
@@ -31,6 +31,4 @@ const reactionSchema = new Schema(
 
 reactionSchema.index({ "expireAt": 1 }, { expireAfterSeconds: 1 });
 
-module.exports = (mongoose.models && mongoose.models.Reaction
-    ? mongoose.models.Reaction
-    : mongoose.model('Reaction', reactionSchema));
+module.exports = mongoose.model('Reaction', reactionSchema);

@@ -32,6 +32,7 @@ export default class CreatePost extends Component {
 
     render() {
         const { headerTag, date } = this.state;
+        console.log(this.props);
         return (
             <Mutation
                 mutation={createPost}
@@ -87,7 +88,7 @@ export default class CreatePost extends Component {
                                             variables: {
                                                 headerTag,
                                                 body: plainText,
-                                                date
+                                                date,
                                             }
                                         });
                                         this.setState({

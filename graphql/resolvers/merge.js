@@ -64,19 +64,27 @@ const userFormat = userData => {
         follower: users.bind(this, userData.follower)
     };
 };
+
+const hashtagFormat = hashtagData => {
+    console.log(hashtagData.post);
+    return {
+        ...hashtagData._doc,
+        post: posts.bind(this, hashtagData.post),
+    };
+};
 //==============================//
 
 const posts = async postIds => {
     try {
         const posts = await Post.find({ _id: { $in: postIds } });
-
-        console.log(posts)
         posts.sort((a, b) => {
             return (
                 postIds.indexOf(a._id.toString()) -
                 postIds.indexOf(b._id.toString())
             );
         });
+
+        console.log(posts);
 
         return posts.map(post => {
             return postFormat(post);
@@ -96,7 +104,7 @@ const users = async usersIds => {
             );
         });
         return users.map(user => {
-            return userFormat(user)
+            return userFormat(user);
         });
     } catch (err) {
         throw err;
@@ -184,3 +192,4 @@ exports.feelings = feelings;
 exports.commentFormat = commentFormat;
 exports.postFormat = postFormat;
 exports.userFormat = userFormat;
+exports.hashtagFormat = hashtagFormat;

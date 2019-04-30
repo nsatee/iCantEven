@@ -60,6 +60,14 @@ type AuthData {
 
 }
 
+type Hashtag {
+    _id: ID!
+    total: Int!
+    post: [Post]!
+    displayTag: [String]!
+    searchTag: String!
+}
+
 input PostInput {
     body: String!
     headerTag: String
@@ -86,6 +94,8 @@ type RootQuery {
     tokenLogin(token: String): User!
     getUser(id: ID!): User!
     getUsers: User!
+    getHashtag: [Hashtag]!
+    getPostsByHashtag(postId: String!): [Post]!
 }
 type RootMutation {
     createPost(postInput: PostInput): Post!
