@@ -6,6 +6,9 @@ const postSchema = new Schema(
         headerTag: {
             type: String
         },
+        searchTag: {
+            type: String
+        },
         body: {
             type: String,
             required: true

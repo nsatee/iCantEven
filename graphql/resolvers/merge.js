@@ -66,7 +66,6 @@ const userFormat = userData => {
 };
 
 const hashtagFormat = hashtagData => {
-    console.log(hashtagData.post);
     return {
         ...hashtagData._doc,
         post: posts.bind(this, hashtagData.post),
@@ -83,8 +82,6 @@ const posts = async postIds => {
                 postIds.indexOf(b._id.toString())
             );
         });
-
-        console.log(posts);
 
         return posts.map(post => {
             return postFormat(post);

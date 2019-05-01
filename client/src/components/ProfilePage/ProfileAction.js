@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
 import { followAction, getUser } from "../../queries";
 import UserListContext from "../../context/userList-context";
+import ProfileInfo from "../Feed/ProfileInfo";
 
 class ProfileAction extends Component {
     state = {
@@ -76,38 +77,39 @@ class ProfileAction extends Component {
     };
 
     render() {
-        
         return (
-            <div className="profile-panel__only" key={this.props.user._id}>
-                <div
-                    className="stalker-total"
-                    onClick={() =>
-                        this.props.getUser(
-                            this.props.getUserQuery.getUser.following,
-                            this.props.getUserQuery.getUser.follower
-                        )
-                    }
-                >
-                    <h2>
-                        Stalking <span>{this.state.followingTotal}</span>
-                    </h2>
-                    <h2>
-                        Stalker <span>{this.state.followerTotal}</span>
-                    </h2>
-                </div>
-                {this.props.currentUser._id !== this.props.user._id && (
-                    <div className="profile-panel__action">
-                        <button
-                            className={`btn btn-blue ${
-                                this.state.follow ? "active" : ""
-                            }`}
-                            onClick={() => this.handleFollow()}
-                        >
-                            {!this.state.follow ? "Stalk" : "Unstalk"}
-                        </button>
+            <React.Fragment>
+                <div className="profile-panel__only" key={this.props.user._id}>
+                    <div
+                        className="stalker-total"
+                        onClick={() =>
+                            this.props.getUser(
+                                this.props.getUserQuery.getUser.following,
+                                this.props.getUserQuery.getUser.follower
+                            )
+                        }
+                    >
+                        <h2>
+                            Stalking <span>{this.state.followingTotal}</span>
+                        </h2>
+                        <h2>
+                            Stalker <span>{this.state.followerTotal}</span>
+                        </h2>
                     </div>
-                )}
-            </div>
+                    {this.props.currentUser._id !== this.props.user._id && (
+                        <div className="profile-panel__action">
+                            <button
+                                className={`btn btn-blue ${
+                                    this.state.follow ? "active" : ""
+                                }`}
+                                onClick={() => this.handleFollow()}
+                            >
+                                {!this.state.follow ? "Stalk" : "Unstalk"}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </React.Fragment>
         );
     }
 }

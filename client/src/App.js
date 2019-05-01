@@ -14,6 +14,7 @@ import Notfound from './pages/NotFound';
 
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import RouteOrigin from "./components/common/RouteOrigin";
+import HashtagPage from "./components/HashtagPage/HashtagPage";
 
 class App extends Component {
     state = {
@@ -44,7 +45,6 @@ class App extends Component {
                 <Query query={tokenLogin} variables={{ token }}>
                     {({ loading, error, data }) => {
                         if (loading) return "Loading...";
-                        console.log(data);
                         !error ? (this.signinRoute = true) : (this.signinRoute = false);
                         return (
                             <BrowserRouter>
@@ -79,6 +79,12 @@ class App extends Component {
                                             <RouteOrigin
                                                 path="/profile/:profileId?"
                                                 component={ProfilePage}
+                                                createPost={false}
+                                                currentUser={data && data.tokenLogin}
+                                            />
+                                            <RouteOrigin
+                                                path="/hashtag/:hashtagQuery?"
+                                                component={HashtagPage}
                                                 createPost={false}
                                                 currentUser={data && data.tokenLogin}
                                             />

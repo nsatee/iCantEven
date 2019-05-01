@@ -1,0 +1,21 @@
+.hashtag-header__panel {
+    padding: 20px 10px;
+}
+
+.hashtag-list {
+    display: block;
+    padding: 15px 20px;
+    background: $dark-black;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .4);
+    transition: .2s;
+
+    h1 {
+        color: $white;
+    }
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}

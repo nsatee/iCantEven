@@ -41,11 +41,11 @@ module.exports = {
         const post = new Post({
             body: args.postInput.body,
             headerTag: args.postInput.headerTag,
+            searchTag: args.postInput.headerTag.toLowerCase(),
             date: new Date(args.postInput.date),
             creator: req.userId
         });
         try {
-            console.log(args.postInput.creator);
             const result = await post.save();
             const creator = await User.findById(req.userId);
             const hashtag = await Hashtag.findOne({
@@ -143,16 +143,23 @@ module.exports = {
             console.log(err);
         }
     },
-    getHashtag: async () => {
-        const hashtags = await Hashtag.find({})
-            .limit(5)
-            .sort({ total: 1 });
-        
-        return hashtags.map(hashtag => hashtagFormat(hashtag));
+    getHashtag: async ({ hashtag }) => {
+        try {
+            const seachQuery =
+                hashtag !== ""
+                    ? { searchTag: hashtag.toLowerCase(), total: { $gt: 0 } }
+                    : { total: { $gt: 0 } };
+            const hashtags = await Hashtag.find(seachQuery)
+                .limit(5)
+                .sort({ total: -1 });
+            return hashtags.map(hashtag => hashtagFormat(hashtag));
+        } catch (err) {
+            console.log(err);
+        }
     },
     getPostsByHashtag: async ({ hashtag }) => {
         try {
-            const posts = await Post.find({searchTag: hashtag});
+            const posts = await Post.find({ searchTag: hashtag.toLowerCase() });
             return posts.map(post => {
                 return postFormat(post);
             });

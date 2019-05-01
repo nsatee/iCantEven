@@ -94,8 +94,8 @@ type RootQuery {
     tokenLogin(token: String): User!
     getUser(id: ID!): User!
     getUsers: User!
-    getHashtag: [Hashtag]!
-    getPostsByHashtag(postId: String!): [Post]!
+    getHashtag(hashtag: String): [Hashtag]!
+    getPostsByHashtag(hashtag: String!): [Post]!
 }
 type RootMutation {
     createPost(postInput: PostInput): Post!
