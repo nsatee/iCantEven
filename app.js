@@ -21,7 +21,7 @@ app.use(
         rootValue: graphQlResolvers,
         graphiql: true,
         query: ``
-    }),
+    })
 );
 
 mongoose.connect(
@@ -31,6 +31,18 @@ mongoose.connect(
     { useNewUrlParser: true },
     console.log("DB is connected")
 );
+
+if (process.env.NODE_ENV === "production") {
+    // Express will serve up the production asset
+    // like main.js or main.css!
+    app.use(express.static("client/build"));
+    // express will serve up the index.html file
+    // if it doesn't reconize the route
+    const path = require("path");
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    });
+}
 
 app.listen(8000, () => {
     console.log("server is running");
