@@ -2,12 +2,27 @@ import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
 import { getPostsByHashtag, hashtagInfo } from "../../queries/hashtag";
 import Post from "../Feed/PostList/Post";
+import { Loading } from "../common/Loading";
 
 class HashtagPage extends Component {
     render() {
         const { loading, getPostsByHashtag } = this.props.getPostsByHashtag;
         const { getHashtag } = this.props.hashtagInfo;
-        if (loading) return "Loading...";
+        if (loading) {
+            return (
+                <div
+                    style={{
+                        width: "100vw",
+                        height: "100vh",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}
+                >
+                    <Loading />
+                </div>
+            );
+        }
         console.log(getHashtag);
         return (
             <div className="hashtag-container">

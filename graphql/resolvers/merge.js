@@ -7,9 +7,9 @@ const Comment = require("../../models/Comment");
 const CommentFeeling = require("../../models/CommentFeeling");
 
 //===== dataLoader ======//
-const userLoader = new DataLoader(userIds => {
-    return User.find({ _id: { $in: userIds } });
-});
+// const userLoader = new DataLoader(userIds => {
+//     return user(userIds)
+// });
 
 const commentLoader = new DataLoader(commentIds => {
     return comments(commentIds);
@@ -27,6 +27,7 @@ const feelingLoader = new DataLoader(feelingIds => {
 
 //===== format gql schema ======//
 const postFormat = post => {
+    console.log(post)
     return {
         ...post._doc,
         createdAt: new Date(post._doc.createdAt).toISOString(),
@@ -167,8 +168,7 @@ const populateReactions = async reactionIds => {
 };
 
 const user = async userId => {
-    const user = await userLoader.load(userId.toString());
-    console.log(user);
+    const user = await User.findById(userId);
     try {
         return {
             ...user._doc,

@@ -8,7 +8,7 @@ class ReactionMutation extends Component {
     reacted = this.props.hasReacted.reacted;
 
     render() {
-        const { hasReacted, postId, user } = this.props;
+        const { hasReacted, postId } = this.props;
         return (
             <Mutation
                 mutation={addReaction}
@@ -68,6 +68,8 @@ class ReactionMutation extends Component {
                             </div>
                         );
                     }
+
+                    if (error) console.log(error);
 
                     return (
                         <div className="post-item__actions">

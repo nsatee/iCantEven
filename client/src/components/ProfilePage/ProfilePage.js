@@ -4,7 +4,7 @@ import { getUser } from "../../queries/auth";
 import { Link } from "react-router-dom";
 import ProfilePanel from "../Feed/ProfilePanel";
 import PostList from "../Feed/PostList/PostList";
-// import UserListContext from "../../context/userList-context";
+import { Loading } from "../common/Loading";
 
 const ProfileMarkup = props => {
     return (
@@ -122,7 +122,21 @@ class ProfilePage extends Component {
     render() {
         const { profileId } = this.props.match.params;
         const { loading, getUser } = this.props.getUser;
-        if (loading) return "loading";
+        if (loading) {
+            return (
+                <div
+                    style={{
+                        width: "100vw",
+                        height: "100vh",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}
+                >
+                    <Loading />
+                </div>
+            );
+        }
         console.log(getUser, this.props.currentUser);
         return (
             <React.Fragment>

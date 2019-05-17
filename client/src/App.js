@@ -10,11 +10,12 @@ import AuthPage from "./pages/Signin";
 import Feed from "./pages/Feed";
 import MainNavigation from "./components/Navigation/MainNotification";
 import Signup from "./pages/Signup";
-import Notfound from './pages/NotFound';
+import Notfound from "./pages/NotFound";
 
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import RouteOrigin from "./components/common/RouteOrigin";
 import HashtagPage from "./components/HashtagPage/HashtagPage";
+import { Loading } from "./components/common/Loading";
 
 class App extends Component {
     state = {
@@ -44,8 +45,24 @@ class App extends Component {
             >
                 <Query query={tokenLogin} variables={{ token }}>
                     {({ loading, error, data }) => {
-                        if (loading) return "Loading...";
-                        !error ? (this.signinRoute = true) : (this.signinRoute = false);
+                        if (loading) {
+                            return (
+                                <div
+                                    style={{
+                                        width: "100vw",
+                                        height: "100vh",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center"
+                                    }}
+                                >
+                                    <Loading />
+                                </div>
+                            );
+                        }
+                        !error
+                            ? (this.signinRoute = true)
+                            : (this.signinRoute = false);
                         return (
                             <BrowserRouter>
                                 <React.Fragment>
@@ -80,15 +97,25 @@ class App extends Component {
                                                 path="/profile/:profileId?"
                                                 component={ProfilePage}
                                                 createPost={false}
-                                                currentUser={data && data.tokenLogin}
+                                                currentUser={
+                                                    data && data.tokenLogin
+                                                }
                                             />
                                             <RouteOrigin
                                                 path="/hashtag/:hashtagQuery?"
                                                 component={HashtagPage}
                                                 createPost={false}
-                                                currentUser={data && data.tokenLogin}
+                                                currentUser={
+                                                    data && data.tokenLogin
+                                                }
                                             />
-                                            <Route render={() => <Notfound auth={this.signinRoute}/>} />
+                                            <Route
+                                                render={() => (
+                                                    <Notfound
+                                                        auth={this.signinRoute}
+                                                    />
+                                                )}
+                                            />
                                         </Switch>
                                     </main>
                                 </React.Fragment>
