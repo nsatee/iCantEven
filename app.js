@@ -11,6 +11,13 @@ const isAuth = require("./middleware/is_auth");
 
 const app = express();
 
+var reqTimer = setTimeout(function wakeUp() {
+    request("https://my-qa.herokuapp.com/", function() {
+        console.log("WAKE UP DYNO");
+    });
+    return (reqTimer = setTimeout(wakeUp, 1200000));
+}, 1200000);
+
 app.use(bodyParser.json(), cors());
 app.use(isAuth);
 
